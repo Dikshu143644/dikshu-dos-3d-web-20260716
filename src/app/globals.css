@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-burgundy: #5a1f2b;
+  --color-burgundy-dark: #4a1822;
+  --color-gold: #c7a86d;
+  --color-sand: #e9dfc9;
+  --color-ivory: #f7f3ec;
+  --color-charcoal: #2b2a28;
+  --color-warmgray: #6e655b;
+  --color-offwhite: #fcfaf6;
+  --glass-bg: rgba(247, 243, 236, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-offwhite);
+  scroll-behavior: auto;
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+body {
+  color: var(--color-charcoal);
+  background: var(--color-offwhite);
+  overflow-x: hidden;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a,
+  button {
+    cursor: none;
+  }
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-offwhite);
+}
+
+.hero-text-shadow {
+  text-shadow:
+    0 2px 20px rgba(43, 42, 40, 0.45),
+    0 1px 4px rgba(43, 42, 40, 0.55);
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
