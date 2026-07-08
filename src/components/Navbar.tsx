@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import clsx from "clsx";
@@ -8,7 +9,14 @@ import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const links = ["Resort", "Suites", "Experiences", "Dining", "Spa", "Contact"];
+const links = [
+  { label: "Resort", href: "/" },
+  { label: "Experiences", href: "/experiences" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Dining", href: "/#dining" },
+  { label: "Services", href: "/#services" },
+  { label: "Contact", href: "/#contact" },
+];
 
 export default function Navbar({ revealed }: { revealed: boolean }) {
   const [scrolled, setScrolled] = useState(false);
@@ -33,8 +41,8 @@ export default function Navbar({ revealed }: { revealed: boolean }) {
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-        <a
-          href="#"
+        <Link
+          href="/"
           data-cursor-hover
           className={clsx(
             "font-display text-xl italic tracking-widest transition-colors duration-500",
@@ -42,21 +50,21 @@ export default function Navbar({ revealed }: { revealed: boolean }) {
           )}
         >
           Viceroy
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-9 md:flex">
           {links.map((link) => (
-            <li key={link}>
-              <a
-                href="#"
+            <li key={link.label}>
+              <Link
+                href={link.href}
                 data-cursor-hover
                 className={clsx(
                   "font-body text-[0.7rem] uppercase tracking-widest2 transition-colors duration-500 hover:text-gold",
                   scrolled ? "text-charcoal" : "text-ivory/85"
                 )}
               >
-                {link}
-              </a>
+                {link.label}
+              </Link>
             </li>
           ))}
         </ul>
