@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
+import { AnimatePresence } from "framer-motion";
 import { useSequencesPreload, type SequenceConfig } from "@/hooks/useSequencesPreload";
+import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero/Hero";
 import InteractiveSelector from "@/components/ui/interactive-selector";
@@ -35,13 +37,14 @@ export default function HomeExperience() {
     []
   );
 
-  const { imagesRef } = useSequencesPreload(sequences);
+  const { imagesRef, progress, ready } = useSequencesPreload(sequences);
 
   return (
     <>
-      <Navbar revealed />
+      <AnimatePresence>{!ready && <Preloader progress={progress} />}</AnimatePresence>
+      <Navbar revealed={ready} />
       <main>
-        <Hero imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed />
+        <Hero imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
         <div id="experiences">
           <InteractiveSelector />
         </div>
