@@ -12,6 +12,7 @@ import GalleryHeading from "@/components/GalleryHeading";
 import DiningSection from "@/components/DiningSection";
 import ServicesSection from "@/components/ServicesSection";
 import ClosingCTASection from "@/components/ClosingCTASection";
+import ReservationMotionSection from "@/components/ReservationMotionSection";
 import ContactSection from "@/components/ContactSection";
 
 const galleryImages = [
@@ -24,7 +25,7 @@ const galleryImages = [
 ];
 
 const FRAME_COUNT = 300;
-const FOLDERS = ["1st-vdo", "2nd-vdo", "3rd-vdo"] as const;
+const FOLDERS = ["1st-vdo", "2nd-vdo", "3rd-vdo", "4th-vdo"] as const;
 
 export default function HomeExperience() {
   const sequences = useMemo<SequenceConfig[]>(
@@ -55,6 +56,7 @@ export default function HomeExperience() {
         <DiningSection />
         <ServicesSection />
         <ClosingCTASection />
+        <ReservationMotionSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
         <ContactSection />
       </main>
     </>

@@ -58,7 +58,7 @@ export default function ClosingCTASection() {
           </p>
 
           <a
-            href="#contact"
+            href="#reserve"
             data-cursor-hover
             className="group mt-8 inline-flex items-center gap-2 rounded-full bg-burgundy-dark px-8 py-3.5 font-body text-xs uppercase tracking-widest2 text-ivory transition-colors duration-300 hover:bg-gold hover:text-burgundy-dark"
           >

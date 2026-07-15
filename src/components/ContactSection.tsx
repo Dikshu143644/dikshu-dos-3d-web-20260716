@@ -53,7 +53,7 @@ export default function ContactSection() {
             </p>
 
             <a
-              href="#"
+              href="mailto:reservations@dos.com?subject=Dikshu%20Reservation"
               data-cursor-hover
               className="group mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark transition-colors duration-300 hover:bg-white"
             >
@@ -105,7 +105,7 @@ export default function ContactSection() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 font-body text-xs text-gray-500 md:flex-row">
-          <p>© {new Date().getFullYear()} DOS. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} DOS. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-gold">
               Privacy Policy

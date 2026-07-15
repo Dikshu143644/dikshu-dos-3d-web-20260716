@@ -69,8 +69,8 @@ export default function Navbar({ revealed }: { revealed: boolean }) {
           ))}
         </ul>
 
-        <a
-          href="#"
+        <Link
+          href="/#reserve"
           data-cursor-hover
           className={clsx(
             "hidden rounded-full border px-6 py-2.5 font-body text-[0.68rem] uppercase tracking-widest2 transition-colors duration-500 hover:bg-gold hover:text-burgundy-dark md:inline-block",
@@ -78,7 +78,7 @@ export default function Navbar({ revealed }: { revealed: boolean }) {
           )}
         >
           Reserve
-        </a>
+        </Link>
       </nav>
     </motion.header>
   );
