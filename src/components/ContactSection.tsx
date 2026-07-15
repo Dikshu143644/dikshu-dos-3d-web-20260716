@@ -14,7 +14,7 @@ import {
 
 const contactDetails = [
   { icon: PiPhone, text: "+1 (555) 123-4567" },
-  { icon: PiEnvelopeSimple, text: "reservations@viceroy.com" },
+  { icon: PiEnvelopeSimple, text: "reservations@dos.com" },
   { icon: PiMapPin, text: "1 Ocean Drive, Bali, Indonesia" },
 ];
 
@@ -82,9 +82,9 @@ export default function ContactSection() {
             className="flex flex-col items-start justify-between md:items-end md:text-right"
           >
             <div>
-              <p className="font-display text-2xl italic text-white">Viceroy</p>
+              <p className="font-display text-2xl italic text-white">Dikshu</p>
               <p className="mt-2 font-body text-xs uppercase tracking-widest2 text-gray-500">
-                Built for Timeless Luxury
+                A DOS Experience
               </p>
             </div>
 
@@ -105,7 +105,7 @@ export default function ContactSection() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 font-body text-xs text-gray-500 md:flex-row">
-          <p>© {new Date().getFullYear()} Viceroy. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} DOS. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-gold">
               Privacy Policy

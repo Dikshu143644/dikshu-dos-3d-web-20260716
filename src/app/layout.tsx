@@ -28,9 +28,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Viceroy — Experience Timeless Luxury",
+  title: "Dikshu - Experience Timeless Luxury",
   description:
-    "Viceroy Resort — where architecture, nature and unforgettable hospitality meet.",
+    "Dikshu by DOS - where architecture, nature and unforgettable hospitality meet.",
 };
 
 export default function RootLayout({

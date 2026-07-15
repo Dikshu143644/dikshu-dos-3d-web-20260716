@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import InteractiveSelector from "@/components/ui/interactive-selector";
 
 export const metadata: Metadata = {
-  title: "Viceroy — Suites & Spaces",
+  title: "Dikshu - Suites & Spaces",
 };
 
 export default function ExperiencesPage() {

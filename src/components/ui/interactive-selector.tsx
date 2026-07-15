@@ -162,7 +162,7 @@ const InteractiveSelector = () => {
           Discover Your Space
         </h1>
         <p className="text-lg md:text-xl text-gray-300 font-body max-w-xl mx-auto animate-fadeInTop delay-600">
-          Explore the distinct suites and sanctuaries of Viceroy.
+          Explore the distinct suites and sanctuaries of Dikshu.
         </p>
       </div>
 

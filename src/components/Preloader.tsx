@@ -36,7 +36,7 @@ export default function Preloader({ progress }: PreloaderProps) {
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className="font-display text-3xl italic tracking-widest text-ivory sm:text-4xl md:text-5xl"
       >
-        Viceroy
+        Dikshu
       </motion.p>
 
       <motion.div

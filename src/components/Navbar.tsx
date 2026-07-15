@@ -49,7 +49,7 @@ export default function Navbar({ revealed }: { revealed: boolean }) {
             scrolled ? "text-burgundy-dark" : "text-ivory"
           )}
         >
-          Viceroy
+          Dikshu
         </Link>
 
         <ul className="hidden items-center gap-9 md:flex">

@@ -127,7 +127,7 @@ export default function DiningSection() {
             Fine Dining
           </p>
           <h2 className="font-display text-4xl italic font-medium text-white md:text-5xl">
-            An Evening at Viceroy
+            An Evening at Dikshu
           </h2>
           <p className="mx-auto mt-5 max-w-lg font-body text-sm text-gray-400 md:text-base">
             Candlelit tables, curated menus, and settings built for

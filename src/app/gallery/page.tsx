@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 
 export const metadata: Metadata = {
-  title: "Viceroy — Gallery",
+  title: "Dikshu - Gallery",
 };
 
 const images = [
@@ -52,7 +52,7 @@ export default function GalleryPage() {
               The Estate in Detail
             </p>
             <h1 className="font-display text-4xl italic font-medium text-white md:text-6xl">
-              A Closer Look at Viceroy
+              A Closer Look at Dikshu
             </h1>
             <p className="mx-auto mt-5 max-w-lg font-body text-sm text-gray-400 md:text-base">
               Scroll to journey through the spaces, textures and views that

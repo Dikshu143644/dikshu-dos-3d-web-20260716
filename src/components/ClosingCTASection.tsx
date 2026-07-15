@@ -52,8 +52,8 @@ export default function ClosingCTASection() {
             quiet luxury, found
           </p>
           <p className="mx-auto mt-6 max-w-md font-body text-sm leading-relaxed text-warmgray md:mx-0 md:text-base">
-            Some places ask for your attention. Viceroy simply asks for your
-            time — the rest settles on its own, one unhurried evening at a
+            Some places ask for your attention. Dikshu simply asks for your
+            time - the rest settles on its own, one unhurried evening at a
             time.
           </p>
 
