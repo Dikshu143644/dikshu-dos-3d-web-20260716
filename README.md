@@ -14,6 +14,8 @@ Dikshu is a cinematic luxury web experience by DOS. It combines immersive image 
 - Scroll-driven visual storytelling
 - Suites and spaces selector
 - Parallax gallery presentation
+- Active Reserve flow with email handoff
+- Scroll-controlled reservation motion section
 - Dining and contact sections
 - Responsive Next.js interface
 
