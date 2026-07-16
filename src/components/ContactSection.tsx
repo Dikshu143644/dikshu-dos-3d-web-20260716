@@ -30,13 +30,76 @@ const socials = [
 ];
 
 const quickActions = [
-  { icon: PiPhone, label: "Call", value: "7666971183", href: "tel:+917666971183", external: false },
-  { icon: PiPhone, label: "Call", value: "7276661915", href: "tel:+917276661915", external: false },
-  { icon: PiWhatsappLogo, label: "WhatsApp", value: "Chat now", href: "https://wa.me/917666971183", external: true },
-  { icon: PiEnvelopeSimple, label: "Email", value: "Gmail", href: "mailto:omkardsupe143644@gmail.com", external: false },
-  { icon: PiInstagramLogo, label: "Instagram", value: "_omkar_d_supe_", href: "https://www.instagram.com/_omkar_d_supe_/", external: true },
-  { icon: PiLinkedinLogo, label: "LinkedIn", value: "Omkar Supe", href: "https://www.linkedin.com/in/omkar-supe-14u644/", external: true },
-  { icon: PiGithubLogo, label: "GitHub", value: "Dikshu143644", href: "https://github.com/Dikshu143644", external: true },
+  {
+    icon: PiPhone,
+    label: "Call",
+    value: "7666971183",
+    href: "tel:+917666971183",
+    external: false,
+    className: "sm:col-span-3",
+    glow: "from-gold/26 via-white/8 to-transparent",
+    iconClass: "border-gold/50 text-gold shadow-[0_0_26px_rgba(199,168,109,0.24)]",
+  },
+  {
+    icon: PiPhone,
+    label: "Call",
+    value: "7276661915",
+    href: "tel:+917276661915",
+    external: false,
+    className: "sm:col-span-3",
+    glow: "from-amber-300/20 via-white/8 to-transparent",
+    iconClass: "border-amber-300/50 text-amber-200 shadow-[0_0_26px_rgba(252,211,77,0.18)]",
+  },
+  {
+    icon: PiWhatsappLogo,
+    label: "WhatsApp",
+    value: "Chat now",
+    href: "https://wa.me/917666971183",
+    external: true,
+    className: "sm:col-span-2",
+    glow: "from-emerald-400/28 via-emerald-100/8 to-transparent",
+    iconClass: "border-emerald-300/55 text-emerald-300 shadow-[0_0_28px_rgba(52,211,153,0.24)]",
+  },
+  {
+    icon: PiEnvelopeSimple,
+    label: "Email",
+    value: "Gmail",
+    href: "mailto:omkardsupe143644@gmail.com",
+    external: false,
+    className: "sm:col-span-2",
+    glow: "from-sky-300/24 via-white/8 to-transparent",
+    iconClass: "border-sky-300/55 text-sky-200 shadow-[0_0_28px_rgba(125,211,252,0.2)]",
+  },
+  {
+    icon: PiInstagramLogo,
+    label: "Instagram",
+    value: "_omkar_d_supe_",
+    href: "https://www.instagram.com/_omkar_d_supe_/",
+    external: true,
+    className: "sm:col-span-2",
+    glow: "from-fuchsia-400/26 via-rose-300/10 to-transparent",
+    iconClass: "border-fuchsia-300/55 text-fuchsia-200 shadow-[0_0_28px_rgba(217,70,239,0.22)]",
+  },
+  {
+    icon: PiLinkedinLogo,
+    label: "LinkedIn",
+    value: "Omkar Supe",
+    href: "https://www.linkedin.com/in/omkar-supe-14u644/",
+    external: true,
+    className: "sm:col-span-3",
+    glow: "from-blue-400/28 via-cyan-200/8 to-transparent",
+    iconClass: "border-blue-300/55 text-blue-200 shadow-[0_0_28px_rgba(96,165,250,0.24)]",
+  },
+  {
+    icon: PiGithubLogo,
+    label: "GitHub",
+    value: "Dikshu143644",
+    href: "https://github.com/Dikshu143644",
+    external: true,
+    className: "sm:col-span-3",
+    glow: "from-white/22 via-violet-200/10 to-transparent",
+    iconClass: "border-white/55 text-white shadow-[0_0_28px_rgba(255,255,255,0.16)]",
+  },
 ];
 
 const fadeUp = {
@@ -84,11 +147,11 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
         cropScale={1.22}
         offsetX={0.06}
         offsetY={0.04}
-        className="absolute inset-0 h-full w-full opacity-65"
+        className="absolute inset-0 h-full w-full opacity-90 brightness-125 saturate-125"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(199,168,109,0.24),transparent_32%),linear-gradient(90deg,rgba(0,0,0,0.92),rgba(0,0,0,0.62)_48%,rgba(0,0,0,0.88)),linear-gradient(0deg,rgba(0,0,0,0.94),rgba(0,0,0,0.28)_45%,rgba(0,0,0,0.92))]"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(199,168,109,0.28),transparent_34%),radial-gradient(circle_at_12%_78%,rgba(74,222,128,0.12),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.76),rgba(0,0,0,0.36)_48%,rgba(0,0,0,0.72)),linear-gradient(0deg,rgba(0,0,0,0.82),rgba(0,0,0,0.14)_45%,rgba(0,0,0,0.74))]"
       />
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
 
@@ -151,8 +214,8 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
               </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              {quickActions.map(({ icon: Icon, label, value, href, external }) => (
+            <div className="grid gap-3 sm:grid-cols-6">
+              {quickActions.map(({ icon: Icon, label, value, href, external, className, glow, iconClass }) => (
                 <a
                   key={`${label}-${value}`}
                   href={href}
@@ -160,11 +223,13 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
                   data-cursor-hover
                   target={external ? "_blank" : undefined}
                   rel={external ? "noreferrer" : undefined}
-                  className="group relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.045] px-4 py-4 text-left text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_18px_48px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-gold/70 hover:bg-gold/[0.09] hover:shadow-[0_0_34px_rgba(199,168,109,0.22)]"
+                  className={`group relative min-h-[86px] overflow-hidden rounded-[1.35rem] border border-white/20 bg-white/[0.075] px-4 py-4 text-left text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-18px_34px_rgba(255,255,255,0.035),0_20px_56px_rgba(0,0,0,0.32)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/[0.13] hover:shadow-[0_0_42px_rgba(199,168,109,0.22)] ${className}`}
                 >
-                  <span className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full bg-gold/15 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
+                  <span className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br ${glow} blur-2xl transition-opacity duration-300 group-hover:opacity-100`} />
+                  <span className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent opacity-60" />
+                  <span className="pointer-events-none absolute -left-24 top-0 h-full w-20 rotate-12 bg-white/20 blur-xl transition-transform duration-700 group-hover:translate-x-[28rem]" />
                   <span className="relative flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/40 bg-black/35 text-gold shadow-[0_0_22px_rgba(199,168,109,0.18)]">
+                    <span className={`flex h-10 w-10 items-center justify-center rounded-full border bg-black/35 ${iconClass}`}>
                       <Icon size={17} />
                     </span>
                     <span>
