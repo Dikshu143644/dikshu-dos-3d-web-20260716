@@ -14,6 +14,11 @@ const FOLDERS = ["1st-vdo", "2nd-vdo", "3rd-vdo"] as const;
 const PANEL_COUNT = FOLDERS.length;
 const HERO_SCRUB_WEIGHT = 2;
 const HERO_TRANSITION_WEIGHT = 1;
+const SEQUENCE_CROP = {
+  cropScale: 1.2,
+  offsetX: 0.05,
+  offsetY: 0.04,
+};
 
 interface HeroProps {
   imagesRef: React.MutableRefObject<Record<string, HTMLImageElement[]>>;
@@ -74,7 +79,7 @@ export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
     <section ref={sectionRef} className="relative" style={{ height: `${(totalWeight + 1) * 100}vh` }}>
       <div
         ref={pinRef}
-        className="relative h-screen w-screen overflow-hidden bg-charcoal"
+        className="relative h-screen w-full overflow-hidden bg-charcoal"
         style={{ perspective: "1600px" }}
       >
         <div
@@ -97,6 +102,7 @@ export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
                 ref={playerRefs[i]}
                 imagesRef={imagesRef}
                 sequenceId={folder}
+                {...SEQUENCE_CROP}
                 className="absolute inset-0 h-full w-full"
               />
             </div>
