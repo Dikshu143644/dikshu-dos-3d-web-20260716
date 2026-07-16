@@ -2,6 +2,8 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
+const MAX_CANVAS_DPR = 3;
+
 export interface ImageSequencePlayerHandle {
   drawFrame: (index: number) => void;
 }
@@ -82,6 +84,8 @@ const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequenceP
       const dy = (ch - dh) / 2 + offsetY * ch;
 
       ctx.clearRect(0, 0, cw, ch);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, dx, dy, dw, dh);
     };
 
@@ -93,9 +97,13 @@ const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequenceP
 
       let raf = 0;
       const resize = () => {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.round(window.innerWidth * dpr);
-        canvas.height = Math.round(window.innerHeight * dpr);
+        const dpr = Math.min(window.devicePixelRatio || 1, MAX_CANVAS_DPR);
+        const bounds = canvas.parentElement?.getBoundingClientRect();
+        const width = bounds?.width || window.innerWidth;
+        const height = bounds?.height || window.innerHeight;
+
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
         draw(lastIndexRef.current);
       };
 
