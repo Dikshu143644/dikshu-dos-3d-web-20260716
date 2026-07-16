@@ -11,6 +11,9 @@ interface ImageSequencePlayerProps {
   imagesRef: React.MutableRefObject<Record<string, HTMLImageElement[]>>;
   sequenceId: string;
   className?: string;
+  cropScale?: number;
+  offsetX?: number;
+  offsetY?: number;
 }
 
 /**
@@ -24,7 +27,10 @@ interface ImageSequencePlayerProps {
  * finishes, so a snapshot taken at first render would go stale forever.
  */
 const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequencePlayerProps>(
-  function ImageSequencePlayer({ imagesRef, sequenceId, className }, ref) {
+  function ImageSequencePlayer(
+    { imagesRef, sequenceId, className, cropScale = 1, offsetX = 0, offsetY = 0 },
+    ref
+  ) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const lastIndexRef = useRef(0);
     const pendingImgRef = useRef<HTMLImageElement | null>(null);
@@ -69,11 +75,11 @@ const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequenceP
 
       const cw = canvas.width;
       const ch = canvas.height;
-      const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+      const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight) * cropScale;
       const dw = img.naturalWidth * scale;
       const dh = img.naturalHeight * scale;
-      const dx = (cw - dw) / 2;
-      const dy = (ch - dh) / 2;
+      const dx = (cw - dw) / 2 + offsetX * cw;
+      const dy = (ch - dh) / 2 + offsetY * ch;
 
       ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, dx, dy, dw, dh);

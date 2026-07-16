@@ -4,25 +4,24 @@ import { motion } from "framer-motion";
 import {
   PiPhone,
   PiEnvelopeSimple,
-  PiMapPin,
-  PiFacebookLogo,
   PiInstagramLogo,
   PiLinkedinLogo,
-  PiPinterestLogo,
+  PiGithubLogo,
+  PiWhatsappLogo,
   PiArrowUpRight,
 } from "react-icons/pi";
 
 const contactDetails = [
-  { icon: PiPhone, text: "+1 (555) 123-4567" },
-  { icon: PiEnvelopeSimple, text: "reservations@dos.com" },
-  { icon: PiMapPin, text: "1 Ocean Drive, Bali, Indonesia" },
+  { icon: PiPhone, text: "7666971183", href: "tel:+917666971183" },
+  { icon: PiPhone, text: "7276661915", href: "tel:+917276661915" },
+  { icon: PiEnvelopeSimple, text: "omkardsupe143644@gmail.com", href: "mailto:omkardsupe143644@gmail.com" },
 ];
 
 const socials = [
-  { icon: PiFacebookLogo, label: "Facebook" },
-  { icon: PiInstagramLogo, label: "Instagram" },
-  { icon: PiLinkedinLogo, label: "LinkedIn" },
-  { icon: PiPinterestLogo, label: "Pinterest" },
+  { icon: PiInstagramLogo, label: "Instagram", href: "https://www.instagram.com/_omkar_d_supe_/" },
+  { icon: PiLinkedinLogo, label: "LinkedIn", href: "https://www.linkedin.com/in/omkar-supe-14u644/" },
+  { icon: PiGithubLogo, label: "GitHub", href: "https://github.com/Dikshu143644" },
+  { icon: PiWhatsappLogo, label: "WhatsApp", href: "https://wa.me/917666971183" },
 ];
 
 const fadeUp = {
@@ -53,7 +52,7 @@ export default function ContactSection() {
             </p>
 
             <a
-              href="mailto:reservations@dos.com?subject=Dikshu%20Reservation"
+              href="mailto:omkardsupe143644@gmail.com?subject=Dikshu%20Reservation"
               data-cursor-hover
               className="group mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark transition-colors duration-300 hover:bg-white"
             >
@@ -62,12 +61,14 @@ export default function ContactSection() {
             </a>
 
             <ul className="mt-10 space-y-4">
-              {contactDetails.map(({ icon: Icon, text }) => (
+              {contactDetails.map(({ icon: Icon, text, href }) => (
                 <li key={text} className="flex items-center gap-3 font-body text-sm text-gray-300">
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-gold/30 text-gold">
                     <Icon size={16} />
                   </span>
-                  {text}
+                  <a href={href} className="transition-colors duration-300 hover:text-gold">
+                    {text}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -89,12 +90,14 @@ export default function ContactSection() {
             </div>
 
             <div className="mt-10 flex gap-3 md:mt-auto">
-              {socials.map(({ icon: Icon, label }) => (
+              {socials.map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
-                  href="#"
+                  href={href}
                   aria-label={label}
                   data-cursor-hover
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors duration-300 hover:border-gold hover:text-gold"
                 >
                   <Icon size={16} />
@@ -107,11 +110,11 @@ export default function ContactSection() {
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 font-body text-xs text-gray-500 md:flex-row">
           <p>&copy; {new Date().getFullYear()} DOS. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-gold">
-              Privacy Policy
+            <a href="https://github.com/Dikshu143644" target="_blank" rel="noreferrer" className="hover:text-gold">
+              GitHub
             </a>
-            <a href="#" className="hover:text-gold">
-              Terms of Service
+            <a href="https://www.linkedin.com/in/omkar-supe-14u644/" target="_blank" rel="noreferrer" className="hover:text-gold">
+              LinkedIn
             </a>
           </div>
         </div>

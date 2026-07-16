@@ -23,12 +23,11 @@ export default function ReservationMotionSection({
   revealed,
 }: ReservationMotionSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const pinRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ImageSequencePlayerHandle>(null);
 
   useEffect(() => {
-    if (!revealed || !sectionRef.current || !pinRef.current) return;
+    if (!revealed || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
       const drawProgress = (progress: number) => {
@@ -48,8 +47,6 @@ export default function ReservationMotionSection({
         start: "top top",
         end: "bottom bottom",
         scrub: 0.45,
-        pin: pinRef.current,
-        pinSpacing: true,
         onUpdate: (self) => drawProgress(self.progress),
       });
 
@@ -66,12 +63,15 @@ export default function ReservationMotionSection({
   }, [frameCount, revealed]);
 
   return (
-    <section id="reserve" ref={sectionRef} className="relative h-[260vh] bg-black">
-      <div ref={pinRef} className="relative h-screen w-screen overflow-hidden bg-charcoal">
+    <section id="reserve" ref={sectionRef} className="relative min-h-[260vh] bg-black">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-charcoal">
         <ImageSequencePlayer
           ref={playerRef}
           imagesRef={imagesRef}
           sequenceId="4th-vdo"
+          cropScale={1.2}
+          offsetX={0.05}
+          offsetY={0.04}
           className="absolute inset-0 h-full w-full"
         />
 
@@ -91,14 +91,14 @@ export default function ReservationMotionSection({
             <h2 className="mt-5 font-display text-4xl italic font-medium leading-tight text-ivory sm:text-5xl md:text-6xl">
               Step into the stay before you arrive.
             </h2>
-            <p className="mt-6 max-w-md font-body text-sm leading-relaxed text-ivory/78 md:text-base">
-              Move through the suite as the page scrolls, then send DOS your
+            <p className="mt-6 max-w-md font-body text-sm leading-relaxed text-ivory/88 md:text-base">
+              Move through the suite as the page scrolls, then send Omkar your
               dates and we will shape the arrival around you.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="mailto:reservations@dos.com?subject=Dikshu%20Reservation"
+                href="mailto:omkardsupe143644@gmail.com?subject=Dikshu%20Reservation"
                 data-cursor-hover
                 className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark transition-colors duration-300 hover:bg-ivory"
               >
@@ -110,7 +110,7 @@ export default function ReservationMotionSection({
                 data-cursor-hover
                 className="group inline-flex items-center gap-2 rounded-full border border-ivory/40 px-7 py-3 font-body text-xs uppercase tracking-widest2 text-ivory transition-colors duration-300 hover:border-gold hover:text-gold"
               >
-                Plan with DOS
+                Plan with Omkar
                 <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
