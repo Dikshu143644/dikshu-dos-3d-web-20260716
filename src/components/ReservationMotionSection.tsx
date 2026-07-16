@@ -77,7 +77,7 @@ export default function ReservationMotionSection({
 
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74),rgba(0,0,0,0.28)_46%,rgba(0,0,0,0.08)),linear-gradient(0deg,rgba(0,0,0,0.58),transparent_48%,rgba(0,0,0,0.18))]"
+          className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.86),rgba(0,0,0,0.58)_34%,rgba(0,0,0,0.20)_68%,rgba(0,0,0,0.08)),linear-gradient(0deg,rgba(0,0,0,0.62),transparent_48%,rgba(0,0,0,0.22))]"
         />
 
         <div
@@ -85,13 +85,13 @@ export default function ReservationMotionSection({
           className="relative z-10 flex h-full items-end px-6 pb-14 pt-28 md:items-center md:px-12 md:pb-0"
         >
           <div className="max-w-xl">
-            <p className="font-body text-xs uppercase tracking-[0.42em] text-gold">
+            <p className="font-body text-xs uppercase tracking-[0.42em] text-gold drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
               Reserve Dikshu
             </p>
-            <h2 className="mt-5 font-display text-4xl italic font-medium leading-tight text-ivory sm:text-5xl md:text-6xl">
+            <h2 className="hero-text-shadow mt-5 font-display text-4xl italic font-medium leading-tight text-ivory sm:text-5xl md:text-6xl">
               Step into the stay before you arrive.
             </h2>
-            <p className="mt-6 max-w-md font-body text-sm leading-relaxed text-ivory/88 md:text-base">
+            <p className="mt-6 max-w-md rounded-md bg-black/28 px-4 py-3 font-body text-sm font-medium leading-relaxed text-white shadow-[0_12px_38px_rgba(0,0,0,0.34)] backdrop-blur-[2px] md:text-base">
               Move through the suite as the page scrolls, then share your
               dates with DOS and we will shape the arrival around you.
             </p>
