@@ -6,11 +6,8 @@ Dikshu is a cinematic luxury web experience by DOS. It combines immersive image 
 
 - Brand name: Dikshu
 - Company: DOS
-- Email: omkardsupe143644@gmail.com
-- Phone: 7666971183 / 7276661915
-- Instagram: https://www.instagram.com/_omkar_d_supe_/
-- LinkedIn: https://www.linkedin.com/in/omkar-supe-14u644/
-- GitHub: https://github.com/Dikshu143644
+- Developer: Dikshu
+- Contact details: Add only official DOS/Dikshu contact channels when provided.
 
 ## Experience
 

@@ -6,10 +6,7 @@ import { motion } from "framer-motion";
 import {
   PiPhone,
   PiEnvelopeSimple,
-  PiInstagramLogo,
-  PiLinkedinLogo,
   PiGithubLogo,
-  PiWhatsappLogo,
   PiArrowUpRight,
 } from "react-icons/pi";
 import ImageSequencePlayer, {
@@ -17,85 +14,73 @@ import ImageSequencePlayer, {
 } from "@/components/story/ImageSequencePlayer";
 
 const contactDetails = [
-  { icon: PiPhone, text: "7666971183", href: "tel:+917666971183" },
-  { icon: PiPhone, text: "7276661915", href: "tel:+917276661915" },
-  { icon: PiEnvelopeSimple, text: "omkardsupe143644@gmail.com", href: "mailto:omkardsupe143644@gmail.com" },
+  { icon: PiEnvelopeSimple, text: "Dikshu Reservations", href: "#reserve" },
+  { icon: PiPhone, text: "DOS Experience Desk", href: "#services" },
+  { icon: PiGithubLogo, text: "Developer: Dikshu", href: "#contact" },
 ];
 
 const socials = [
-  { icon: PiInstagramLogo, label: "Instagram", href: "https://www.instagram.com/_omkar_d_supe_/" },
-  { icon: PiLinkedinLogo, label: "LinkedIn", href: "https://www.linkedin.com/in/omkar-supe-14u644/" },
-  { icon: PiGithubLogo, label: "GitHub", href: "https://github.com/Dikshu143644" },
-  { icon: PiWhatsappLogo, label: "WhatsApp", href: "https://wa.me/917666971183" },
+  { icon: PiEnvelopeSimple, label: "Reserve Dikshu", href: "#reserve", external: false },
+  { icon: PiGithubLogo, label: "Developer: Dikshu", href: "#contact", external: false },
 ];
 
 const quickActions = [
   {
     icon: PiPhone,
-    label: "Call",
-    value: "7666971183",
-    href: "tel:+917666971183",
+    label: "Concierge",
+    value: "DOS Experience",
+    href: "#services",
     external: false,
     className: "sm:col-span-3",
     glow: "from-gold/26 via-white/8 to-transparent",
     iconClass: "border-gold/50 text-gold shadow-[0_0_26px_rgba(199,168,109,0.24)]",
   },
   {
-    icon: PiPhone,
-    label: "Call",
-    value: "7276661915",
-    href: "tel:+917276661915",
+    icon: PiEnvelopeSimple,
+    label: "Reserve",
+    value: "Dikshu Stay",
+    href: "#reserve",
     external: false,
     className: "sm:col-span-3",
     glow: "from-amber-300/20 via-white/8 to-transparent",
     iconClass: "border-amber-300/50 text-amber-200 shadow-[0_0_26px_rgba(252,211,77,0.18)]",
   },
   {
-    icon: PiWhatsappLogo,
-    label: "WhatsApp",
-    value: "Chat now",
-    href: "https://wa.me/917666971183",
-    external: true,
+    icon: PiArrowUpRight,
+    label: "Experience",
+    value: "Suites",
+    href: "#experiences",
+    external: false,
     className: "sm:col-span-2",
     glow: "from-emerald-400/28 via-emerald-100/8 to-transparent",
     iconClass: "border-emerald-300/55 text-emerald-300 shadow-[0_0_28px_rgba(52,211,153,0.24)]",
   },
   {
-    icon: PiEnvelopeSimple,
-    label: "Email",
-    value: "Gmail",
-    href: "mailto:omkardsupe143644@gmail.com",
+    icon: PiArrowUpRight,
+    label: "Gallery",
+    value: "View spaces",
+    href: "#gallery",
     external: false,
     className: "sm:col-span-2",
     glow: "from-sky-300/24 via-white/8 to-transparent",
     iconClass: "border-sky-300/55 text-sky-200 shadow-[0_0_28px_rgba(125,211,252,0.2)]",
   },
   {
-    icon: PiInstagramLogo,
-    label: "Instagram",
-    value: "_omkar_d_supe_",
-    href: "https://www.instagram.com/_omkar_d_supe_/",
-    external: true,
+    icon: PiArrowUpRight,
+    label: "Services",
+    value: "DOS Care",
+    href: "#services",
+    external: false,
     className: "sm:col-span-2",
     glow: "from-fuchsia-400/26 via-rose-300/10 to-transparent",
     iconClass: "border-fuchsia-300/55 text-fuchsia-200 shadow-[0_0_28px_rgba(217,70,239,0.22)]",
   },
   {
-    icon: PiLinkedinLogo,
-    label: "LinkedIn",
-    value: "Omkar Supe",
-    href: "https://www.linkedin.com/in/omkar-supe-14u644/",
-    external: true,
-    className: "sm:col-span-3",
-    glow: "from-blue-400/28 via-cyan-200/8 to-transparent",
-    iconClass: "border-blue-300/55 text-blue-200 shadow-[0_0_28px_rgba(96,165,250,0.24)]",
-  },
-  {
     icon: PiGithubLogo,
-    label: "GitHub",
-    value: "Dikshu143644",
-    href: "https://github.com/Dikshu143644",
-    external: true,
+    label: "Developer",
+    value: "Dikshu",
+    href: "#contact",
+    external: false,
     className: "sm:col-span-3",
     glow: "from-white/22 via-violet-200/10 to-transparent",
     iconClass: "border-white/55 text-white shadow-[0_0_28px_rgba(255,255,255,0.16)]",
@@ -175,7 +160,7 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
             </p>
 
             <a
-              href="mailto:omkardsupe143644@gmail.com?subject=Dikshu%20Reservation"
+              href="#reserve"
               data-cursor-hover
               className="group mt-8 inline-flex items-center gap-2 rounded-full border border-gold/70 bg-gold/90 px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark shadow-[0_0_28px_rgba(199,168,109,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_0_38px_rgba(199,168,109,0.45)]"
             >
@@ -246,14 +231,14 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
             </div>
 
             <div className="flex flex-wrap gap-3 lg:justify-end">
-              {socials.map(({ icon: Icon, label, href }) => (
+              {socials.map(({ icon: Icon, label, href, external }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
                   data-cursor-hover
-                  target="_blank"
-                  rel="noreferrer"
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noreferrer" : undefined}
                   className="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-cyan-100/20 bg-white/[0.055] text-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_0_18px_rgba(103,232,249,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-200/60 hover:text-cyan-100 hover:shadow-[0_0_28px_rgba(103,232,249,0.28),0_0_42px_rgba(217,70,239,0.12)]"
                 >
                   <span className="absolute inset-[-30%] rounded-full bg-[conic-gradient(from_140deg,transparent,rgba(103,232,249,0.35),rgba(217,70,239,0.22),transparent)] opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100" />
@@ -268,11 +253,11 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 font-body text-xs text-gray-500 md:flex-row">
           <p>&copy; {new Date().getFullYear()} DOS. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="https://github.com/Dikshu143644" target="_blank" rel="noreferrer" className="hover:text-gold">
-              GitHub
+            <a href="#contact" className="hover:text-gold">
+              Developer: Dikshu
             </a>
-            <a href="https://www.linkedin.com/in/omkar-supe-14u644/" target="_blank" rel="noreferrer" className="hover:text-gold">
-              LinkedIn
+            <a href="#reserve" className="hover:text-gold">
+              DOS
             </a>
           </div>
         </div>

@@ -92,17 +92,17 @@ export default function ReservationMotionSection({
               Step into the stay before you arrive.
             </h2>
             <p className="mt-6 max-w-md font-body text-sm leading-relaxed text-ivory/88 md:text-base">
-              Move through the suite as the page scrolls, then send Omkar your
-              dates and we will shape the arrival around you.
+              Move through the suite as the page scrolls, then share your
+              dates with DOS and we will shape the arrival around you.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="mailto:omkardsupe143644@gmail.com?subject=Dikshu%20Reservation"
+                href="#contact"
                 data-cursor-hover
                 className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark transition-colors duration-300 hover:bg-ivory"
               >
-                Reserve by Email
+                Reserve with DOS
                 <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
@@ -110,7 +110,7 @@ export default function ReservationMotionSection({
                 data-cursor-hover
                 className="group inline-flex items-center gap-2 rounded-full border border-ivory/40 px-7 py-3 font-body text-xs uppercase tracking-widest2 text-ivory transition-colors duration-300 hover:border-gold hover:text-gold"
               >
-                Plan with Omkar
+                Plan with Dikshu
                 <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
