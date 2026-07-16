@@ -21,10 +21,15 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    if (isTouch || reducedMotion) {
+      ScrollTrigger.normalizeScroll(false);
+      return;
+    }
+
     const lenis = new Lenis({
-      duration: reducedMotion ? 0.4 : isTouch ? 0.8 : 1.2,
+      duration: 1.05,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: !reducedMotion,
+      smoothWheel: true,
       touchMultiplier: 1.5,
       wheelMultiplier: 1,
     });

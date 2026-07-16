@@ -24,6 +24,7 @@ interface HeroProps {
   imagesRef: React.MutableRefObject<Record<string, HTMLImageElement[]>>;
   frameCount: number;
   revealed: boolean;
+  lite?: boolean;
 }
 
 /**
@@ -31,7 +32,7 @@ interface HeroProps {
  * left into the next one in order — no text, no buttons, just the videos
  * and the cinematic 3D slide between them.
  */
-export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
+export default function Hero({ imagesRef, frameCount, revealed, lite = false }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
@@ -49,7 +50,7 @@ export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
   const playerRefs = [playerRef0, playerRef1, playerRef2] as const;
 
   useScrollStoryController({
-    active: revealed,
+    active: revealed && !lite,
     frameCount,
     panelCount: PANEL_COUNT,
     scrubWeight: HERO_SCRUB_WEIGHT,
@@ -75,11 +76,66 @@ export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
 
   const totalWeight = getTotalWeight(PANEL_COUNT, HERO_SCRUB_WEIGHT, HERO_TRANSITION_WEIGHT);
 
+  if (lite) {
+    return (
+      <section id="resort" className="relative min-h-[100svh] overflow-hidden bg-charcoal">
+        <img
+          src="/1st-vdo/ezgif-frame-001.jpg"
+          alt=""
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.68),rgba(0,0,0,0.24)_45%,rgba(0,0,0,0.40)),radial-gradient(circle_at_50%_44%,rgba(0,0,0,0.32),transparent_42%)]"
+        />
+        <HeroOverlay fogRef={fogRef} />
+
+        <div className="pointer-events-none relative z-20 flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 34 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="hero-text-shadow font-display text-4xl italic font-medium text-ivory sm:text-5xl"
+          >
+            Where Silence Speaks Luxury
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-5 max-w-sm font-body text-sm font-medium leading-relaxed text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] sm:text-base"
+          >
+            Our luxury spa blends nature, architecture and holistic care to
+            create moments that last.
+          </motion.p>
+
+          <motion.a
+            href="#experiences"
+            data-cursor-hover
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-auto group mt-8 inline-flex items-center gap-2 rounded-full border border-gold/70 bg-black/20 px-7 py-3 font-body text-xs uppercase tracking-widest2 text-ivory backdrop-blur-md transition-colors duration-300 hover:bg-gold hover:text-burgundy-dark"
+          >
+            Explore it
+          </motion.a>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section ref={sectionRef} className="relative" style={{ height: `${(totalWeight + 1) * 100}vh` }}>
+    <section
+      id="resort"
+      ref={sectionRef}
+      className="relative"
+      style={{ height: `${(totalWeight + 1) * 100}vh` }}
+    >
       <div
         ref={pinRef}
-        className="relative h-screen w-full overflow-hidden bg-charcoal"
+        className="relative h-[100svh] w-full overflow-hidden bg-charcoal"
         style={{ perspective: "1600px" }}
       >
         <div
@@ -95,13 +151,15 @@ export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
             <div
               key={folder}
               ref={panelRefs[i]}
-              className="relative h-screen w-screen shrink-0"
+              className="relative h-[100svh] w-screen shrink-0"
               style={{ willChange: "transform" }}
             >
               <ImageSequencePlayer
                 ref={playerRefs[i]}
                 imagesRef={imagesRef}
                 sequenceId={folder}
+                fallbackSrc={`/${folder}/ezgif-frame-001.jpg`}
+                priorityFallback={i === 0}
                 {...SEQUENCE_CROP}
                 className="absolute inset-0 h-full w-full"
               />

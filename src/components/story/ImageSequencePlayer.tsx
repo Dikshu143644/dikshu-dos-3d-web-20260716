@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 
 export interface ImageSequencePlayerHandle {
   drawFrame: (index: number) => void;
@@ -14,6 +14,8 @@ interface ImageSequencePlayerProps {
   cropScale?: number;
   offsetX?: number;
   offsetY?: number;
+  fallbackSrc?: string;
+  priorityFallback?: boolean;
 }
 
 /**
@@ -28,13 +30,24 @@ interface ImageSequencePlayerProps {
  */
 const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequencePlayerProps>(
   function ImageSequencePlayer(
-    { imagesRef, sequenceId, className, cropScale = 1, offsetX = 0, offsetY = 0 },
+    {
+      imagesRef,
+      sequenceId,
+      className,
+      cropScale = 1,
+      offsetX = 0,
+      offsetY = 0,
+      fallbackSrc,
+      priorityFallback = false,
+    },
     ref
   ) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const lastIndexRef = useRef(0);
     const pendingImgRef = useRef<HTMLImageElement | null>(null);
     const arrayRetriesRef = useRef(0);
+    const hasDrawnRef = useRef(false);
+    const [hasDrawn, setHasDrawn] = useState(false);
 
     const draw = (index: number) => {
       const canvas = canvasRef.current;
@@ -83,6 +96,11 @@ const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequenceP
 
       ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, dx, dy, dw, dh);
+
+      if (!hasDrawnRef.current) {
+        hasDrawnRef.current = true;
+        setHasDrawn(true);
+      }
     };
 
     useImperativeHandle(ref, () => ({ drawFrame: draw }));
@@ -94,8 +112,11 @@ const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequenceP
       let raf = 0;
       const resize = () => {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.round(window.innerWidth * dpr);
-        canvas.height = Math.round(window.innerHeight * dpr);
+        const bounds = canvas.parentElement?.getBoundingClientRect();
+        const width = bounds?.width || window.innerWidth;
+        const height = bounds?.height || window.innerHeight;
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
         draw(lastIndexRef.current);
       };
 
@@ -112,7 +133,23 @@ const ImageSequencePlayer = forwardRef<ImageSequencePlayerHandle, ImageSequenceP
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <canvas ref={canvasRef} aria-hidden className={className} />;
+    return (
+      <div aria-hidden className={className}>
+        {fallbackSrc && (
+          <img
+            src={fallbackSrc}
+            alt=""
+            draggable={false}
+            loading={priorityFallback ? "eager" : "lazy"}
+            fetchPriority={priorityFallback ? "high" : "auto"}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+              hasDrawn ? "opacity-0" : "opacity-100"
+            }`}
+          />
+        )}
+        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      </div>
+    );
   }
 );
 

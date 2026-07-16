@@ -2,6 +2,7 @@
 
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
+import { useLiteExperience } from "@/hooks/useLiteExperience";
 
 interface ParallaxImage {
   src: string;
@@ -14,6 +15,7 @@ interface ZoomParallaxProps {
 }
 
 export function ZoomParallax({ images }: ZoomParallaxProps) {
+  const lite = useLiteExperience();
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -27,6 +29,24 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
   const scale9 = useTransform(scrollYProgress, [0, 1], [1, 9]);
 
   const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
+
+  if (lite) {
+    return (
+      <div className="grid gap-3 bg-black px-4 pb-16 sm:grid-cols-2">
+        {images.map(({ src, alt }, index) => (
+          <div key={src} className="relative aspect-[4/5] overflow-hidden border border-white/10 bg-charcoal">
+            <img
+              src={src || "/placeholder.svg"}
+              alt={alt || `Gallery image ${index + 1}`}
+              loading={index < 2 ? "eager" : "lazy"}
+              className="h-full w-full object-cover"
+            />
+            <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-burgundy/20" />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div ref={container} className="relative h-[300vh] bg-black">

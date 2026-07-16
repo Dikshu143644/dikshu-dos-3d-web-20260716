@@ -1,9 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { AnimatePresence } from "framer-motion";
 import { useSequencesPreload, type SequenceConfig } from "@/hooks/useSequencesPreload";
-import Preloader from "@/components/Preloader";
+import { useLiteExperience } from "@/hooks/useLiteExperience";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero/Hero";
 import InteractiveSelector from "@/components/ui/interactive-selector";
@@ -24,28 +23,46 @@ const galleryImages = [
   { src: "/resort-designs/oceanfront-estate.webp", alt: "Oceanfront estate with cliffside infinity pool" },
 ];
 
-const FRAME_COUNT = 300;
+const SOURCE_FRAME_COUNT = 300;
+const DESKTOP_FRAME_COUNT = 160;
 const FOLDERS = ["1st-vdo", "2nd-vdo", "3rd-vdo", "4th-vdo"] as const;
 
+const frameSrc = (folder: string, frameIndex: number, frameCount: number) => {
+  const sourceIndex =
+    frameCount <= 1
+      ? 0
+      : Math.round((frameIndex / (frameCount - 1)) * (SOURCE_FRAME_COUNT - 1));
+
+  return `/${folder}/ezgif-frame-${String(sourceIndex + 1).padStart(3, "0")}.jpg`;
+};
+
 export default function HomeExperience() {
+  const lite = useLiteExperience();
+  const frameCount = lite ? 1 : DESKTOP_FRAME_COUNT;
   const sequences = useMemo<SequenceConfig[]>(
-    () =>
-      FOLDERS.map((folder) => ({
+    () => {
+      if (lite) return [];
+
+      return FOLDERS.map((folder) => ({
         id: folder,
-        count: FRAME_COUNT,
-        getSrc: (i: number) => `/${folder}/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`,
-      })),
-    []
+        count: frameCount,
+        getSrc: (i: number) => frameSrc(folder, i, frameCount),
+      }));
+    },
+    [frameCount, lite]
   );
 
-  const { imagesRef, progress, ready } = useSequencesPreload(sequences);
+  const { imagesRef, ready } = useSequencesPreload(sequences, {
+    blocking: false,
+    concurrency: lite ? 0 : 4,
+    startDelayMs: 900,
+  });
 
   return (
     <>
-      <AnimatePresence>{!ready && <Preloader progress={progress} />}</AnimatePresence>
       <Navbar revealed={ready} />
       <main>
-        <Hero imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
+        <Hero imagesRef={imagesRef} frameCount={frameCount} revealed={ready} lite={lite} />
         <div id="experiences">
           <InteractiveSelector />
         </div>
@@ -56,8 +73,8 @@ export default function HomeExperience() {
         <DiningSection />
         <ServicesSection />
         <ClosingCTASection />
-        <ReservationMotionSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
-        <ContactSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
+        <ReservationMotionSection imagesRef={imagesRef} frameCount={frameCount} revealed={ready} lite={lite} />
+        <ContactSection imagesRef={imagesRef} frameCount={frameCount} revealed={ready} lite={lite} />
       </main>
     </>
   );
