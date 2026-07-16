@@ -15,21 +15,19 @@ interface ReservationMotionSectionProps {
   imagesRef: MutableRefObject<Record<string, HTMLImageElement[]>>;
   frameCount: number;
   revealed: boolean;
-  lite?: boolean;
 }
 
 export default function ReservationMotionSection({
   imagesRef,
   frameCount,
   revealed,
-  lite = false,
 }: ReservationMotionSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ImageSequencePlayerHandle>(null);
 
   useEffect(() => {
-    if (!revealed || lite || !sectionRef.current) return;
+    if (!revealed || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
       const drawProgress = (progress: number) => {
@@ -62,72 +60,15 @@ export default function ReservationMotionSection({
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [frameCount, lite, revealed]);
-
-  const content = (
-    <div ref={contentRef} className="relative z-10 flex h-full items-end px-6 pb-14 pt-28 md:items-center md:px-12 md:pb-0">
-      <div className="max-w-xl">
-        <p className="font-body text-xs uppercase tracking-[0.42em] text-gold">
-          Reserve Dikshu
-        </p>
-        <h2 className="mt-5 font-display text-4xl italic font-medium leading-tight text-ivory sm:text-5xl md:text-6xl">
-          Step into the stay before you arrive.
-        </h2>
-        <p className="mt-6 max-w-md font-body text-sm leading-relaxed text-ivory/88 md:text-base">
-          Move through the suite as the page scrolls, then send Omkar your
-          dates and we will shape the arrival around you.
-        </p>
-
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href="mailto:omkardsupe143644@gmail.com?subject=Dikshu%20Reservation"
-            data-cursor-hover
-            className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark transition-colors duration-300 hover:bg-ivory"
-          >
-            Reserve by Email
-            <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-          <a
-            href="#contact"
-            data-cursor-hover
-            className="group inline-flex items-center gap-2 rounded-full border border-ivory/40 px-7 py-3 font-body text-xs uppercase tracking-widest2 text-ivory transition-colors duration-300 hover:border-gold hover:text-gold"
-          >
-            Plan with Omkar
-            <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-
-  if (lite) {
-    return (
-      <section id="reserve" ref={sectionRef} className="relative min-h-[100svh] overflow-hidden bg-black">
-        <img
-          src="/4th-vdo/ezgif-frame-001.jpg"
-          alt=""
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.76),rgba(0,0,0,0.30)_52%,rgba(0,0,0,0.12)),linear-gradient(0deg,rgba(0,0,0,0.66),transparent_45%,rgba(0,0,0,0.24))]"
-        />
-
-        {content}
-      </section>
-    );
-  }
+  }, [frameCount, revealed]);
 
   return (
     <section id="reserve" ref={sectionRef} className="relative min-h-[260vh] bg-black">
-      <div className="sticky top-0 h-[100svh] w-full overflow-hidden bg-charcoal">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-charcoal">
         <ImageSequencePlayer
           ref={playerRef}
           imagesRef={imagesRef}
           sequenceId="4th-vdo"
-          fallbackSrc="/4th-vdo/ezgif-frame-001.jpg"
           cropScale={1.2}
           offsetX={0.05}
           offsetY={0.04}
@@ -139,7 +80,42 @@ export default function ReservationMotionSection({
           className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74),rgba(0,0,0,0.28)_46%,rgba(0,0,0,0.08)),linear-gradient(0deg,rgba(0,0,0,0.58),transparent_48%,rgba(0,0,0,0.18))]"
         />
 
-        {content}
+        <div
+          ref={contentRef}
+          className="relative z-10 flex h-full items-end px-6 pb-14 pt-28 md:items-center md:px-12 md:pb-0"
+        >
+          <div className="max-w-xl">
+            <p className="font-body text-xs uppercase tracking-[0.42em] text-gold">
+              Reserve Dikshu
+            </p>
+            <h2 className="mt-5 font-display text-4xl italic font-medium leading-tight text-ivory sm:text-5xl md:text-6xl">
+              Step into the stay before you arrive.
+            </h2>
+            <p className="mt-6 max-w-md font-body text-sm leading-relaxed text-ivory/88 md:text-base">
+              Move through the suite as the page scrolls, then send Omkar your
+              dates and we will shape the arrival around you.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="mailto:omkardsupe143644@gmail.com?subject=Dikshu%20Reservation"
+                data-cursor-hover
+                className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark transition-colors duration-300 hover:bg-ivory"
+              >
+                Reserve by Email
+                <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a
+                href="#contact"
+                data-cursor-hover
+                className="group inline-flex items-center gap-2 rounded-full border border-ivory/40 px-7 py-3 font-body text-xs uppercase tracking-widest2 text-ivory transition-colors duration-300 hover:border-gold hover:text-gold"
+              >
+                Plan with Omkar
+                <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

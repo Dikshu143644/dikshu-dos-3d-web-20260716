@@ -19,7 +19,6 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
-import { useLiteExperience } from "@/hooks/useLiteExperience";
 
 const options = [
   {
@@ -112,7 +111,6 @@ const slideVariants = {
 };
 
 const InteractiveSelector = () => {
-  const lite = useLiteExperience();
   const [page, setPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -155,49 +153,6 @@ const InteractiveSelector = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
-
-  if (lite) {
-    return (
-      <section className="bg-black px-4 py-16 text-white">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-display text-4xl font-medium italic tracking-tight text-white">
-            Discover Your Space
-          </h1>
-          <p className="mx-auto mt-4 max-w-md font-body text-sm leading-relaxed text-gray-300">
-            Explore the distinct suites and sanctuaries of Dikshu.
-          </p>
-        </div>
-
-        <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2">
-          {options.map((option, index) => (
-            <article
-              key={option.title}
-              className="relative min-h-[280px] overflow-hidden border border-white/10 bg-charcoal"
-            >
-              <img
-                src={option.image}
-                alt=""
-                loading={index < 2 ? "eager" : "lazy"}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.78),rgba(0,0,0,0.08)_52%)]" />
-              <div className="relative z-10 flex min-h-[280px] flex-col justify-end p-5">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-gold/60 bg-burgundy-dark/85">
-                  {option.icon}
-                </div>
-                <h2 className="font-display text-2xl font-medium italic text-white">
-                  {option.title}
-                </h2>
-                <p className="mt-2 font-body text-sm text-gray-300">
-                  {option.description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    );
-  }
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-black font-sans text-white">

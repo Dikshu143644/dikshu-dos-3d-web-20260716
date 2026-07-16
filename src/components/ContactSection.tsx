@@ -111,14 +111,13 @@ interface ContactSectionProps {
   imagesRef: MutableRefObject<Record<string, HTMLImageElement[]>>;
   frameCount: number;
   revealed: boolean;
-  lite?: boolean;
 }
 
-export default function ContactSection({ imagesRef, frameCount, revealed, lite = false }: ContactSectionProps) {
+export default function ContactSection({ imagesRef, frameCount, revealed }: ContactSectionProps) {
   const playerRef = useRef<ImageSequencePlayerHandle>(null);
 
   useEffect(() => {
-    if (!revealed || lite) return;
+    if (!revealed) return;
 
     let raf = 0;
     let lastFrame = -1;
@@ -137,29 +136,19 @@ export default function ContactSection({ imagesRef, frameCount, revealed, lite =
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [frameCount, lite, revealed]);
+  }, [frameCount, revealed]);
 
   return (
     <section id="contact" className="relative overflow-hidden border-t border-white/10 bg-black px-6 py-16 md:py-20">
-      {lite ? (
-        <img
-          src="/4th-vdo/ezgif-frame-001.jpg"
-          alt=""
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-90 brightness-125 saturate-125"
-        />
-      ) : (
-        <ImageSequencePlayer
-          ref={playerRef}
-          imagesRef={imagesRef}
-          sequenceId="4th-vdo"
-          fallbackSrc="/4th-vdo/ezgif-frame-001.jpg"
-          cropScale={1.22}
-          offsetX={0.06}
-          offsetY={0.04}
-          className="absolute inset-0 h-full w-full opacity-90 brightness-125 saturate-125"
-        />
-      )}
+      <ImageSequencePlayer
+        ref={playerRef}
+        imagesRef={imagesRef}
+        sequenceId="4th-vdo"
+        cropScale={1.22}
+        offsetX={0.06}
+        offsetY={0.04}
+        className="absolute inset-0 h-full w-full opacity-90 brightness-125 saturate-125"
+      />
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(199,168,109,0.28),transparent_34%),radial-gradient(circle_at_12%_78%,rgba(74,222,128,0.12),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.76),rgba(0,0,0,0.36)_48%,rgba(0,0,0,0.72)),linear-gradient(0deg,rgba(0,0,0,0.82),rgba(0,0,0,0.14)_45%,rgba(0,0,0,0.74))]"
