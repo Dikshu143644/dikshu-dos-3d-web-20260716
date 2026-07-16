@@ -57,7 +57,7 @@ export default function HomeExperience() {
         <ServicesSection />
         <ClosingCTASection />
         <ReservationMotionSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
-        <ContactSection />
+        <ContactSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
       </main>
     </>
   );
