@@ -254,9 +254,11 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
                   data-cursor-hover
                   target="_blank"
                   rel="noreferrer"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/25 text-white/75 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_0_24px_rgba(199,168,109,0.08)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:text-gold hover:shadow-[0_0_26px_rgba(199,168,109,0.28)]"
+                  className="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-cyan-100/20 bg-white/[0.055] text-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_0_18px_rgba(103,232,249,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-200/60 hover:text-cyan-100 hover:shadow-[0_0_28px_rgba(103,232,249,0.28),0_0_42px_rgba(217,70,239,0.12)]"
                 >
-                  <Icon size={16} />
+                  <span className="absolute inset-[-30%] rounded-full bg-[conic-gradient(from_140deg,transparent,rgba(103,232,249,0.35),rgba(217,70,239,0.22),transparent)] opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100" />
+                  <span className="absolute inset-[3px] rounded-full border border-white/10 bg-black/30" />
+                  <Icon className="relative z-10 drop-shadow-[0_0_8px_rgba(103,232,249,0.6)]" size={16} />
                 </a>
               ))}
             </div>
