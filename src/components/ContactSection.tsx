@@ -5,82 +5,112 @@ import type { MutableRefObject } from "react";
 import { motion } from "framer-motion";
 import {
   PiPhone,
+  PiPhoneCall,
   PiEnvelopeSimple,
   PiGithubLogo,
+  PiInstagramLogo,
+  PiLinkedinLogo,
+  PiWhatsappLogo,
   PiArrowUpRight,
 } from "react-icons/pi";
 import ImageSequencePlayer, {
   type ImageSequencePlayerHandle,
 } from "@/components/story/ImageSequencePlayer";
 
+const contactLinks = {
+  callPrimary: "tel:+917666971183",
+  callSecondary: "tel:+917276661915",
+  whatsapp:
+    "https://wa.me/917666971183?text=Hello%20Dikshu%2C%20I%20want%20to%20book%20a%20stay.",
+  email: "mailto:omkardsupe143644@gmail.com",
+  github: "https://github.com/Dikshu143644",
+  instagram: "https://www.instagram.com/_omkar_d_supe_/",
+  linkedin: "https://www.linkedin.com/in/omkar-supe-14u644/",
+};
+
 const contactDetails = [
-  { icon: PiEnvelopeSimple, text: "Dikshu Reservations", href: "#reserve" },
-  { icon: PiPhone, text: "DOS Experience Desk", href: "#services" },
-  { icon: PiGithubLogo, text: "Developer: Dikshu", href: "#contact" },
+  { icon: PiPhoneCall, text: "7666971183", href: contactLinks.callPrimary },
+  { icon: PiPhoneCall, text: "7276661915", href: contactLinks.callSecondary },
+  { icon: PiWhatsappLogo, text: "WhatsApp booking", href: contactLinks.whatsapp, external: true },
+  { icon: PiEnvelopeSimple, text: "omkardsupe143644@gmail.com", href: contactLinks.email },
 ];
 
 const socials = [
-  { icon: PiEnvelopeSimple, label: "Reserve Dikshu", href: "#reserve", external: false },
-  { icon: PiGithubLogo, label: "Developer: Dikshu", href: "#contact", external: false },
+  { icon: PiPhoneCall, label: "Call 7666971183", href: contactLinks.callPrimary, external: false },
+  { icon: PiWhatsappLogo, label: "WhatsApp booking", href: contactLinks.whatsapp, external: true },
+  { icon: PiEnvelopeSimple, label: "Email", href: contactLinks.email, external: false },
+  { icon: PiInstagramLogo, label: "Instagram", href: contactLinks.instagram, external: true },
+  { icon: PiLinkedinLogo, label: "LinkedIn", href: contactLinks.linkedin, external: true },
+  { icon: PiGithubLogo, label: "GitHub", href: contactLinks.github, external: true },
 ];
 
 const quickActions = [
   {
-    icon: PiPhone,
-    label: "Concierge",
-    value: "DOS Experience",
-    href: "#services",
+    icon: PiPhoneCall,
+    label: "Call",
+    value: "7666971183",
+    href: contactLinks.callPrimary,
     external: false,
     className: "sm:col-span-3",
     glow: "from-gold/26 via-white/8 to-transparent",
     iconClass: "border-gold/50 text-gold shadow-[0_0_26px_rgba(199,168,109,0.24)]",
   },
   {
-    icon: PiEnvelopeSimple,
-    label: "Reserve",
-    value: "Dikshu Stay",
-    href: "#reserve",
+    icon: PiPhone,
+    label: "Call",
+    value: "7276661915",
+    href: contactLinks.callSecondary,
     external: false,
     className: "sm:col-span-3",
-    glow: "from-amber-300/20 via-white/8 to-transparent",
-    iconClass: "border-amber-300/50 text-amber-200 shadow-[0_0_26px_rgba(252,211,77,0.18)]",
-  },
-  {
-    icon: PiArrowUpRight,
-    label: "Experience",
-    value: "Suites",
-    href: "#experiences",
-    external: false,
-    className: "sm:col-span-2",
-    glow: "from-emerald-400/28 via-emerald-100/8 to-transparent",
-    iconClass: "border-emerald-300/55 text-emerald-300 shadow-[0_0_28px_rgba(52,211,153,0.24)]",
-  },
-  {
-    icon: PiArrowUpRight,
-    label: "Gallery",
-    value: "View spaces",
-    href: "#gallery",
-    external: false,
-    className: "sm:col-span-2",
     glow: "from-sky-300/24 via-white/8 to-transparent",
     iconClass: "border-sky-300/55 text-sky-200 shadow-[0_0_28px_rgba(125,211,252,0.2)]",
   },
   {
-    icon: PiArrowUpRight,
-    label: "Services",
-    value: "DOS Care",
-    href: "#services",
+    icon: PiWhatsappLogo,
+    label: "WhatsApp",
+    value: "Book now",
+    href: contactLinks.whatsapp,
+    external: true,
+    className: "sm:col-span-2",
+    glow: "from-emerald-400/30 via-emerald-100/10 to-transparent",
+    iconClass: "border-emerald-300/60 text-emerald-300 shadow-[0_0_30px_rgba(52,211,153,0.28)]",
+  },
+  {
+    icon: PiEnvelopeSimple,
+    label: "Email",
+    value: "Gmail",
+    href: contactLinks.email,
     external: false,
+    className: "sm:col-span-2",
+    glow: "from-amber-300/22 via-white/8 to-transparent",
+    iconClass: "border-amber-300/50 text-amber-200 shadow-[0_0_26px_rgba(252,211,77,0.18)]",
+  },
+  {
+    icon: PiInstagramLogo,
+    label: "Instagram",
+    value: "_omkar_d_supe_",
+    href: contactLinks.instagram,
+    external: true,
     className: "sm:col-span-2",
     glow: "from-fuchsia-400/26 via-rose-300/10 to-transparent",
     iconClass: "border-fuchsia-300/55 text-fuchsia-200 shadow-[0_0_28px_rgba(217,70,239,0.22)]",
   },
   {
+    icon: PiLinkedinLogo,
+    label: "LinkedIn",
+    value: "Omkar Supe",
+    href: contactLinks.linkedin,
+    external: true,
+    className: "sm:col-span-3",
+    glow: "from-blue-400/24 via-cyan-100/8 to-transparent",
+    iconClass: "border-blue-300/55 text-blue-200 shadow-[0_0_28px_rgba(96,165,250,0.22)]",
+  },
+  {
     icon: PiGithubLogo,
-    label: "Developer",
-    value: "Dikshu",
-    href: "#contact",
-    external: false,
+    label: "GitHub",
+    value: "Dikshu143644",
+    href: contactLinks.github,
+    external: true,
     className: "sm:col-span-3",
     glow: "from-white/22 via-violet-200/10 to-transparent",
     iconClass: "border-white/55 text-white shadow-[0_0_28px_rgba(255,255,255,0.16)]",
@@ -160,21 +190,28 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
             </p>
 
             <a
-              href="#reserve"
+              href={contactLinks.whatsapp}
               data-cursor-hover
+              target="_blank"
+              rel="noreferrer"
               className="group mt-8 inline-flex items-center gap-2 rounded-full border border-gold/70 bg-gold/90 px-7 py-3 font-body text-xs uppercase tracking-widest2 text-burgundy-dark shadow-[0_0_28px_rgba(199,168,109,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_0_38px_rgba(199,168,109,0.45)]"
             >
-              Get in Touch
+              WhatsApp Booking
               <PiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
 
             <ul className="mt-10 space-y-4">
-              {contactDetails.map(({ icon: Icon, text, href }) => (
+              {contactDetails.map(({ icon: Icon, text, href, external }) => (
                 <li key={text} className="flex items-center gap-3 font-body text-sm text-gray-300">
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-gold/30 text-gold">
                     <Icon size={16} />
                   </span>
-                  <a href={href} className="transition-colors duration-300 hover:text-gold">
+                  <a
+                    href={href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noreferrer" : undefined}
+                    className="break-all transition-colors duration-300 hover:text-gold"
+                  >
                     {text}
                   </a>
                 </li>

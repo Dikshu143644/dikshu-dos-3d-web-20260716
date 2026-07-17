@@ -19,6 +19,15 @@ export const siteConfig = {
     "cinematic resort website",
   ],
   ogImage: "/resort-designs/tropical-mansion.jpg",
+  contact: {
+    email: "omkardsupe143644@gmail.com",
+    phonePrimary: "+917666971183",
+    phoneSecondary: "+917276661915",
+    whatsapp: "https://wa.me/917666971183",
+    github: "https://github.com/Dikshu143644",
+    instagram: "https://www.instagram.com/_omkar_d_supe_/",
+    linkedin: "https://www.linkedin.com/in/omkar-supe-14u644/",
+  },
   lastUpdated: "2026-07-17",
   routes: [
     {
@@ -115,6 +124,24 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: siteConfig.company,
     url: siteConfig.url,
+    email: siteConfig.contact.email,
+    telephone: [siteConfig.contact.phonePrimary, siteConfig.contact.phoneSecondary],
+    sameAs: [siteConfig.contact.github, siteConfig.contact.instagram, siteConfig.contact.linkedin],
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "Reservations",
+        telephone: siteConfig.contact.phonePrimary,
+        email: siteConfig.contact.email,
+        availableLanguage: ["en"],
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "WhatsApp booking",
+        url: siteConfig.contact.whatsapp,
+        availableLanguage: ["en"],
+      },
+    ],
     brand: {
       "@type": "Brand",
       name: siteConfig.name,
@@ -130,6 +157,9 @@ export function lodgingJsonLd() {
     url: siteConfig.url,
     image: absoluteUrl(siteConfig.ogImage),
     description: siteConfig.description,
+    email: siteConfig.contact.email,
+    telephone: [siteConfig.contact.phonePrimary, siteConfig.contact.phoneSecondary],
+    sameAs: [siteConfig.contact.github, siteConfig.contact.instagram, siteConfig.contact.linkedin],
     amenityFeature: [
       {
         "@type": "LocationFeatureSpecification",

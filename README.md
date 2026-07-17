@@ -7,7 +7,7 @@ Dikshu is a cinematic luxury web experience by DOS. It combines immersive image 
 - Brand name: Dikshu
 - Company: DOS
 - Developer: Dikshu
-- Contact details: Add only official DOS/Dikshu contact channels when provided.
+- Contact details: Calls, WhatsApp booking, email, GitHub, Instagram and LinkedIn are wired into the contact section.
 
 ## Experience
 
