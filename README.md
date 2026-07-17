@@ -30,6 +30,12 @@ Dikshu is a cinematic luxury web experience by DOS. It combines immersive image 
 - GSAP
 - Lenis smooth scrolling
 
+## SEO Rendering
+
+- Uses the Next.js App Router with server-rendered pages.
+- Public marketing routes are explicitly static generated for fast SEO-friendly HTML.
+- Page metadata, canonical URLs, Open Graph tags, Twitter cards, structured data, sitemap and robots routes are generated from shared Dikshu/DOS SEO config.
+
 ## Getting Started
 
 Install dependencies:

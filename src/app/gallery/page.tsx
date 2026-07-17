@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
+import { createPageMetadata, siteConfig } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Dikshu - Gallery",
-};
+const galleryRoute = siteConfig.routes.find((route) => route.path === "/gallery");
+
+export const dynamic = "force-static";
+export const revalidate = false;
+
+export const metadata: Metadata = createPageMetadata({
+  title: galleryRoute?.title,
+  description: galleryRoute?.description,
+  path: "/gallery",
+  image: "/resort-designs/oceanfront-estate.webp",
+});
 
 const images = [
   {

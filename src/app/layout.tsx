@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScroll/SmoothScrollProvider";
 import CustomCursor from "@/components/Cursor/CustomCursor";
+import { absoluteUrl, createPageMetadata, siteConfig } from "@/lib/seo";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -28,9 +29,30 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Dikshu - Experience Timeless Luxury",
-  description:
-    "Dikshu by DOS - where architecture, nature and unforgettable hospitality meet.",
+  metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.developer }],
+  creator: siteConfig.developer,
+  publisher: siteConfig.company,
+  category: "Luxury hospitality",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/icon.svg",
+  },
+  ...createPageMetadata(),
+  alternates: {
+    canonical: absoluteUrl("/"),
+  },
 };
 
 export default function RootLayout({
