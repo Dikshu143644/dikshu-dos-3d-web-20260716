@@ -1,0 +1,7 @@
+{
+  "task_id": "task-perf-caching-preload",
+  "task_description": "Improve site loading performance by adding aggressive caching headers in next.config.ts, reducing critical preloader frames from 150 to 50, adding Next.js image optimization config, setting Vercel-specific cache headers, and implementing a service worker for frame sequence caching.",
+  "status": "in_progress",
+  "feature_order": ["FEAT-001", "FEAT-002"],
+  "blocked_reason": null
+}

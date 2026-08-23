@@ -1,0 +1,25 @@
+{
+  "project_type": "Next.js 15 + TypeScript + Tailwind CSS + Framer Motion + GSAP",
+  "language": "TypeScript",
+  "build_system": "npm with next build",
+  "test_framework": "No test framework configured (no tests directory, no test runner in package.json)",
+  "build_command": "npm run build",
+  "test_command": "N/A - no tests configured",
+  "verification_instructions": "1. Run `npm run build` to verify the build passes without errors. 2. Check that next.config.ts is valid TypeScript. 3. Verify the service worker file exists in public/. 4. Confirm useSequencesPreload.ts loads only 50 critical thumbnails initially.",
+  "snapshot_or_generated_files": null,
+  "setup_instructions": "node_modules already installed, no additional setup needed",
+  "environment_constraints": "Vercel deployment. No Docker. Build validation via `npm run build`.",
+  "contribution_requirements": "No CONTRIBUTING.md found",
+  "key_patterns": "- All frame sequences in public/{folder}/frame-{001-150}.webp and public/{folder}-thumb/frame-{001-150}.webp. - useSequencesPreload hook manages progressive loading (thumbnails first then full-res). - HomeExperience.tsx defines sequences with FRAME_COUNT=150 and priority settings. - ImageSequencePlayer.tsx reads frames from imagesRef imperatively. - No service worker exists yet. No vercel.json exists yet.",
+  "relevant_files": [
+    "next.config.ts",
+    "src/hooks/useSequencesPreload.ts",
+    "src/components/HomeExperience.tsx",
+    "src/components/story/ImageSequencePlayer.tsx",
+    "src/components/Hero/Hero.tsx",
+    "src/components/Preloader.tsx",
+    "src/app/layout.tsx",
+    "package.json"
+  ],
+  "directory_structure": "Root: next.config.ts, package.json, vercel deployment. src/app/ - Next.js app router pages. src/components/ - UI components including Hero, Preloader, story/ImageSequencePlayer. src/hooks/ - useSequencesPreload.ts (critical preloading), useScrollProximityLoader.ts (lazy trigger). public/ - Static assets: 1st-vdo/ through 4th-vdo/ (150 frames each, 960x540 webp), 1st-vdo-thumb/ through 4th-vdo-thumb/ (150 frames each, 240x135 webp thumbnails)."
+}

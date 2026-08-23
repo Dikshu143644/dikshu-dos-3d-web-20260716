@@ -1,0 +1,31 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Reduce critical preloader-blocking frames from 150 to 50 for 1st-vdo, and add a service worker for frame sequence caching",
+  "status": "completed",
+  "steps": [
+    "In src/hooks/useSequencesPreload.ts, add a new optional field to SequenceConfig called `criticalCount` (number, optional). When a critical sequence has `criticalCount` set, only load that many thumbnail frames (evenly spaced across the range 0 to count-1) before marking the preloader as ready. The remaining thumbnails should load in the background after ready=true, then full-res loads after all thumbnails are in.",
+    "In src/components/HomeExperience.tsx, set `criticalCount: 50` on the 1st-vdo sequence config. This means only 50 evenly-spaced thumbnails out of 150 load before dismissing the preloader (frames 0, 3, 6, 9, ... every 3rd frame). The other 100 thumbnails load immediately after in background.",
+    "Update the useSequencesPreload hook logic so that: (a) For critical sequences with criticalCount, calculate which frame indices are 'critical' (evenly spaced). Load only those thumbs and track progress against criticalCount. (b) Once criticalCount thumbs are loaded, set ready=true and report 100% progress. (c) Immediately begin loading the remaining (non-critical) thumbnails in background. (d) Once ALL thumbnails are loaded, begin full-res swap as before.",
+    "Create a service worker at public/sw.js that: (a) On install, does NOT precache anything (to avoid blocking). (b) On fetch, intercepts requests for frame sequences (URLs matching /1st-vdo/, /2nd-vdo/, /3rd-vdo/, /4th-vdo/ and their -thumb variants). (c) Uses a cache-first strategy: check CacheStorage first, if hit return cached response; if miss, fetch from network, put in cache, and return. (d) Uses a named cache like 'frame-sequences-v1'. (e) For all other requests, falls through to network (does not interfere with Next.js routing).",
+    "Register the service worker from the app. Create src/hooks/useServiceWorker.ts that registers /sw.js on mount (only in production, check process.env.NODE_ENV or just always register). Call this hook from src/components/HomeExperience.tsx (or src/app/layout.tsx).",
+    "Verify the build passes and all files are correctly wired."
+  ],
+  "acceptance_criteria": [
+    "The preloader dismisses after loading only 50 thumbnails (not 150) for the 1st-vdo critical sequence",
+    "The remaining 100 thumbnails for 1st-vdo load in background after preloader dismisses",
+    "Full-res frame loading still happens after all thumbnails are loaded",
+    "A service worker at public/sw.js implements cache-first strategy for frame sequences",
+    "The service worker is registered from the React app",
+    "npm run build passes without errors",
+    "The ImageSequencePlayer still works correctly - it reads from imagesRef which will have frames populated progressively"
+  ],
+  "verification": [
+    "Run `npm run build` and confirm it succeeds without errors",
+    "Read src/hooks/useSequencesPreload.ts and verify criticalCount logic only tracks 50 frames for progress",
+    "Read public/sw.js and verify cache-first strategy for frame URLs",
+    "Read the service worker registration hook and verify it registers sw.js"
+  ],
+  "blocked_reason": null,
+  "findings": "Build passes cleanly. The evenly-spaced index formula Math.round((j * (count-1)) / (criticalCount-1)) produces exactly 50 unique indices for criticalCount=50, count=150 (every 3rd frame: 0, 3, 6, ..., 147). Service worker registered on window load event to avoid competing with initial page load."
+}
