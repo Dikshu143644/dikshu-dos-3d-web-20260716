@@ -1,7 +1,7 @@
 {
   "task_id": "task-deep-perf-optimization",
   "task_description": "Deep performance optimization for image sequence loading: convert JPGs to WebP, reduce frame count from 300 to 150, implement progressive thumbnail-first loading, make only 1st-vdo block the preloader, and add IntersectionObserver scroll-proximity-based lazy loading for remaining sequences.",
-  "status": "in_progress",
+  "status": "completed",
   "feature_order": ["FEAT-001", "FEAT-002"],
   "blocked_reason": null,
   "verification": {
@@ -9,6 +9,6 @@
     "tests": "pass",
     "test_quality": "pass",
     "docker_build": "skipped",
-    "summary": "npm run build succeeds with no errors. All frame files correctly converted (150 WebP per folder, 150 thumbnails per folder). No stale JPG references remain in source code. FRAME_COUNT=150 everywhere. Only 1st-vdo is critical."
+    "summary": "npm run build succeeds cleanly. All 1200 JPG frames converted to 600 WebP + 600 thumbnails. Frame count reduced from 300 to 150. Only 1st-vdo blocks preloader. IntersectionObserver triggers lazy sequences. Semantic review: APPROVED."
   }
 }
