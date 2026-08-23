@@ -11,6 +11,9 @@ export interface SequenceConfig {
   /** Loading priority. 'critical' sequences block the preloader (default).
    *  'lazy' sequences do NOT load on mount - they must be triggered via triggerLoad. */
   priority?: "critical" | "lazy";
+  /** Number of evenly-spaced frames to load before dismissing the preloader.
+   *  Only applies to critical sequences with thumbGetSrc. Defaults to `count`. */
+  criticalCount?: number;
 }
 
 /**
@@ -130,7 +133,11 @@ export function useSequencesPreload(sequences: SequenceConfig[]) {
     });
 
     // --- Load critical sequences: thumbnails first, then full-res in background ---
-    const criticalTotal = criticalSequences.reduce((sum, seq) => sum + seq.count, 0);
+    // criticalTotal counts only the frames that block the preloader (criticalCount or count)
+    const criticalTotal = criticalSequences.reduce(
+      (sum, seq) => sum + (seq.criticalCount ?? seq.count),
+      0
+    );
 
     if (criticalTotal === 0) {
       setProgress(100);
@@ -140,12 +147,71 @@ export function useSequencesPreload(sequences: SequenceConfig[]) {
 
     let criticalThumbsLoaded = 0;
 
+    /**
+     * Called once all critical thumbnails are in AND all remaining background
+     * thumbnails are loaded for a given sequence. Starts full-res swap.
+     */
+    const startFullResIfAllThumbsLoaded = (seq: SequenceConfig, remainingLoaded: number, remainingTotal: number) => {
+      if (remainingLoaded >= remainingTotal) {
+        loadFullRes(seq);
+      }
+    };
+
+    /**
+     * Load remaining (non-critical) thumbnails for a sequence after ready=true.
+     * Once all remaining are loaded, trigger full-res swap.
+     */
+    const loadRemainingThumbs = (seq: SequenceConfig, criticalIndices: Set<number>) => {
+      const frames = imagesRef.current[seq.id];
+      if (!seq.thumbGetSrc) {
+        loadFullRes(seq);
+        return;
+      }
+      const remainingIndices: number[] = [];
+      for (let i = 0; i < seq.count; i += 1) {
+        if (!criticalIndices.has(i)) {
+          remainingIndices.push(i);
+        }
+      }
+      if (remainingIndices.length === 0) {
+        loadFullRes(seq);
+        return;
+      }
+      let remainingLoaded = 0;
+      const remainingTotal = remainingIndices.length;
+      for (const i of remainingIndices) {
+        const img = new window.Image();
+        img.decoding = "async";
+        img.src = seq.thumbGetSrc(i);
+        const settle = () => {
+          if (cancelledRef.current) return;
+          remainingLoaded += 1;
+          startFullResIfAllThumbsLoaded(seq, remainingLoaded, remainingTotal);
+        };
+        img.onload = settle;
+        img.onerror = settle;
+        frames[i] = img;
+      }
+    };
+
+    // Track critical indices per sequence so we can load remaining after ready
+    const criticalIndicesMap = new Map<string, Set<number>>();
+
     criticalSequences.forEach((seq) => {
       const frames = imagesRef.current[seq.id];
+      const effectiveCriticalCount = seq.criticalCount ?? seq.count;
 
       if (seq.thumbGetSrc) {
-        // Load thumbnails first
-        for (let i = 0; i < seq.count; i += 1) {
+        // Calculate evenly-spaced critical frame indices
+        const criticalIndices = new Set<number>();
+        for (let j = 0; j < effectiveCriticalCount; j += 1) {
+          const index = Math.round((j * (seq.count - 1)) / (effectiveCriticalCount - 1));
+          criticalIndices.add(index);
+        }
+        criticalIndicesMap.set(seq.id, criticalIndices);
+
+        // Load only critical thumbnails initially
+        for (const i of criticalIndices) {
           const img = new window.Image();
           img.decoding = "async";
           img.src = seq.thumbGetSrc(i);
@@ -155,8 +221,11 @@ export function useSequencesPreload(sequences: SequenceConfig[]) {
             setProgress(Math.round((criticalThumbsLoaded / criticalTotal) * 100));
             if (criticalThumbsLoaded >= criticalTotal) {
               setReady(true);
-              // Now load full-res in background for critical sequences
-              criticalSequences.forEach((s) => loadFullRes(s));
+              // Load remaining thumbnails in background for all critical sequences
+              criticalSequences.forEach((s) => {
+                const indices = criticalIndicesMap.get(s.id) ?? new Set();
+                loadRemainingThumbs(s, indices);
+              });
             }
           };
           img.onload = settle;
@@ -165,6 +234,7 @@ export function useSequencesPreload(sequences: SequenceConfig[]) {
         }
       } else {
         // No thumbnail variant - load full-res directly and track progress
+        criticalIndicesMap.set(seq.id, new Set());
         for (let i = 0; i < seq.count; i += 1) {
           const img = new window.Image();
           img.decoding = "async";

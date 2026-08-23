@@ -1,0 +1,25 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Add aggressive caching headers and Next.js image optimization config in next.config.ts, plus Vercel-specific headers for static assets",
+  "status": "completed",
+  "steps": [
+    "Update next.config.ts to add a `headers()` async function that sets Cache-Control headers for static assets. Specifically: (a) For all files under /1st-vdo/, /2nd-vdo/, /3rd-vdo/, /4th-vdo/ and their -thumb variants, set `Cache-Control: public, max-age=31536000, immutable`. (b) For other static assets like images (*.webp, *.jpg, *.png, *.svg), also set long-lived cache headers. Use a pattern like `/:path*.(webp|jpg|png|svg)` or multiple header entries.",
+    "Add Next.js image optimization configuration in next.config.ts. Set `images.formats` to ['image/avif', 'image/webp'] (already partially there), add `images.deviceSizes` for responsive breakpoints (e.g., [640, 750, 828, 1080, 1200, 1920]), `images.imageSizes` for fixed sizes, and `images.minimumCacheTTL` set to 31536000 (1 year) for optimized images.",
+    "Add Vercel-specific headers: set `X-Content-Type-Options: nosniff` and `X-Frame-Options: DENY` for security, and also ensure `/_next/static/:path*` gets `Cache-Control: public, max-age=31536000, immutable`.",
+    "Verify that the configuration is valid TypeScript and that `npm run build` still passes."
+  ],
+  "acceptance_criteria": [
+    "next.config.ts exports a valid Next.js config with headers() function",
+    "Static frame sequences (webp files in public/) will be served with Cache-Control: public, max-age=31536000, immutable",
+    "Next.js _next/static assets get immutable cache headers",
+    "images config includes minimumCacheTTL, deviceSizes, and formats",
+    "npm run build passes without errors"
+  ],
+  "verification": [
+    "Run `npm run build` and confirm it succeeds without errors",
+    "Read next.config.ts and confirm it contains headers() with proper Cache-Control values"
+  ],
+  "blocked_reason": null,
+  "findings": "Build passes cleanly. Only pre-existing lint warnings about <img> usage in 3 components (not related to this change). Headers config covers all 8 vdo/thumb directories, _next/static, and static image extensions (webp, jpg, png, svg). Image optimization config includes deviceSizes with 2048, imageSizes up to 384, and 1-year minimumCacheTTL."
+}

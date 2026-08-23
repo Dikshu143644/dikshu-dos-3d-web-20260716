@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useSequencesPreload, type SequenceConfig } from "@/hooks/useSequencesPreload";
+import { useServiceWorker } from "@/hooks/useServiceWorker";
 import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero/Hero";
@@ -36,11 +37,14 @@ export default function HomeExperience() {
         getSrc: (i: number) => `/${folder}/frame-${String(i + 1).padStart(3, "0")}.webp`,
         thumbGetSrc: (i: number) => `/${folder}-thumb/frame-${String(i + 1).padStart(3, "0")}.webp`,
         priority: folder === "1st-vdo" ? "critical" : "lazy",
+        ...(folder === "1st-vdo" ? { criticalCount: 50 } : {}),
       })),
     []
   );
 
   const { imagesRef, progress, ready, triggerLoad } = useSequencesPreload(sequences);
+
+  useServiceWorker();
 
   return (
     <>
