@@ -24,7 +24,7 @@ const galleryImages = [
   { src: "/resort-designs/oceanfront-estate.webp", alt: "Oceanfront estate with cliffside infinity pool" },
 ];
 
-const FRAME_COUNT = 300;
+const FRAME_COUNT = 150;
 const FOLDERS = ["1st-vdo", "2nd-vdo", "3rd-vdo", "4th-vdo"] as const;
 
 export default function HomeExperience() {
@@ -33,20 +33,21 @@ export default function HomeExperience() {
       FOLDERS.map((folder) => ({
         id: folder,
         count: FRAME_COUNT,
-        getSrc: (i: number) => `/${folder}/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`,
-        priority: folder === "4th-vdo" ? "lazy" : "critical",
+        getSrc: (i: number) => `/${folder}/frame-${String(i + 1).padStart(3, "0")}.webp`,
+        thumbGetSrc: (i: number) => `/${folder}-thumb/frame-${String(i + 1).padStart(3, "0")}.webp`,
+        priority: folder === "1st-vdo" ? "critical" : "lazy",
       })),
     []
   );
 
-  const { imagesRef, progress, ready } = useSequencesPreload(sequences);
+  const { imagesRef, progress, ready, triggerLoad } = useSequencesPreload(sequences);
 
   return (
     <>
       <AnimatePresence>{!ready && <Preloader progress={progress} />}</AnimatePresence>
       <Navbar revealed={ready} />
       <main>
-        <Hero imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
+        <Hero imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} triggerLoad={triggerLoad} />
         <div id="experiences">
           <InteractiveSelector />
         </div>
@@ -57,8 +58,8 @@ export default function HomeExperience() {
         <DiningSection />
         <ServicesSection />
         <ClosingCTASection />
-        <ReservationMotionSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
-        <ContactSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} />
+        <ReservationMotionSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} triggerLoad={triggerLoad} />
+        <ContactSection imagesRef={imagesRef} frameCount={FRAME_COUNT} revealed={ready} triggerLoad={triggerLoad} />
       </main>
     </>
   );

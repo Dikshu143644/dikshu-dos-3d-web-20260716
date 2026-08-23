@@ -8,6 +8,7 @@ import { PiArrowUpRight } from "react-icons/pi";
 import ImageSequencePlayer, {
   type ImageSequencePlayerHandle,
 } from "@/components/story/ImageSequencePlayer";
+import { useScrollProximityLoader } from "@/hooks/useScrollProximityLoader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,16 +16,21 @@ interface ReservationMotionSectionProps {
   imagesRef: MutableRefObject<Record<string, HTMLImageElement[]>>;
   frameCount: number;
   revealed: boolean;
+  triggerLoad: (sequenceId: string) => void;
 }
 
 export default function ReservationMotionSection({
   imagesRef,
   frameCount,
   revealed,
+  triggerLoad,
 }: ReservationMotionSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ImageSequencePlayerHandle>(null);
+
+  // Trigger 4th-vdo loading when this section is within 1 viewport of being visible
+  useScrollProximityLoader(sectionRef, ["4th-vdo"], triggerLoad);
 
   useEffect(() => {
     if (!revealed || !sectionRef.current) return;

@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "Rewrite the preload system so only 1st-vdo blocks the preloader, implement scroll-proximity IntersectionObserver-based lazy loading for 2nd/3rd/4th-vdo, add progressive thumbnail-first loading (load small thumbnails immediately for interactivity then swap in full-res in background), and update all component references to use 150 frames with WebP paths.",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "Update src/components/HomeExperience.tsx: (a) Change FRAME_COUNT from 300 to 150. (b) Update getSrc to return WebP paths: `/${folder}/frame-${String(i+1).padStart(3,'0')}.webp`. (c) Change priority so ONLY '1st-vdo' is 'critical', and '2nd-vdo', '3rd-vdo', '4th-vdo' are all 'lazy'. (d) Add a thumbGetSrc function that returns thumbnail paths: `/${folder}-thumb/frame-${String(i+1).padStart(3,'0')}.webp`.",
     "Rewrite src/hooks/useSequencesPreload.ts to support progressive loading: (a) Add a 'thumbGetSrc' optional field to SequenceConfig. (b) For the critical sequence (1st-vdo), load thumbnails first (fast, ~2MB), set ready=true once thumbnails are loaded so the page becomes interactive immediately, then swap in full-res frames in the background. (c) For lazy sequences, do NOT load them on mount at all - export a function like 'loadSequence(id)' that can be called on demand. (d) The progress bar should track thumbnail loading of the critical sequence only (which will be very fast). (e) When full-res frames load, they replace the thumbnail HTMLImageElement entries in imagesRef so the canvas automatically draws higher quality.",
