@@ -9,7 +9,7 @@ import { getTotalWeight } from "@/lib/story/transitionController";
 import ImageSequencePlayer, { type ImageSequencePlayerHandle } from "./ImageSequencePlayer";
 import SequencePreloader from "./SequencePreloader";
 
-const FRAME_COUNT = 300;
+const FRAME_COUNT = 150;
 const FOLDERS = ["1st-vdo", "2nd-vdo", "3rd-vdo"] as const;
 const PANEL_COUNT = FOLDERS.length;
 const SEQUENCE_CROP = {
@@ -19,7 +19,7 @@ const SEQUENCE_CROP = {
 };
 
 const frameSrc = (folder: string, i: number) =>
-  `/${folder}/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
+  `/${folder}/frame-${String(i + 1).padStart(3, "0")}.webp`;
 
 export default function HorizontalPOVSection() {
   const sequences = useMemo<SequenceConfig[]>(
