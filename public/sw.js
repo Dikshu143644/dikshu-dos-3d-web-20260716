@@ -35,6 +35,6 @@ self.addEventListener('fetch', (event) => {
           return response;
         });
       })
-    )
+    ).catch(() => fetch(event.request))
   );
 });
