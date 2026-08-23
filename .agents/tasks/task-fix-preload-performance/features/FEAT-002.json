@@ -1,0 +1,28 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Implement priority-based lazy loading for image sequences. Only preload the critical first 3 sequences (1st-vdo, 2nd-vdo, 3rd-vdo used by Hero) before showing the page. Load 4th-vdo lazily in the background after initial content is visible. Also reduce MAX_CANVAS_DPR from 3 to 2 for better mobile performance.",
+  "status": "pending",
+  "steps": [
+    "Rewrite src/hooks/useSequencesPreload.ts to support a priority-based loading strategy. The hook should accept a SequenceConfig with an optional 'priority' field: 'critical' (blocks the preloader - default) or 'lazy' (loads in background after critical sequences are done). The hook should: (a) load all 'critical' sequences first and set ready=true once those are done, (b) then load 'lazy' sequences in the background, (c) progress should reflect only critical sequences loading (since that's what blocks the UI), (d) expose the same imagesRef interface so downstream consumers work unchanged.",
+    "Update src/components/HomeExperience.tsx to mark the first 3 sequences (1st-vdo, 2nd-vdo, 3rd-vdo) as priority: 'critical' and 4th-vdo as priority: 'lazy'. This means the page shows after ~138MB loads instead of ~184MB.",
+    "In src/components/story/ImageSequencePlayer.tsx, change MAX_CANVAS_DPR from 3 to 2 for better mobile performance. The draw() method already handles the case where images aren't loaded yet (it retries via requestAnimationFrame), so lazy-loaded sequences will render correctly once their frames arrive.",
+    "Verify the build succeeds: run npx tsc --noEmit and npm run build"
+  ],
+  "acceptance_criteria": [
+    "useSequencesPreload accepts sequences with optional priority field ('critical' | 'lazy')",
+    "ready=true is set after only the critical sequences (1st-vdo, 2nd-vdo, 3rd-vdo) finish loading",
+    "Lazy sequences (4th-vdo) begin loading in the background after critical sequences complete",
+    "The imagesRef interface remains unchanged - Record<string, HTMLImageElement[]>",
+    "MAX_CANVAS_DPR is 2 in ImageSequencePlayer.tsx",
+    "Progress percentage only tracks critical sequences (since those block the preloader)",
+    "TypeScript compilation passes (npx tsc --noEmit)",
+    "Next.js production build passes (npm run build)"
+  ],
+  "verification": [
+    "npx tsc --noEmit",
+    "npm run build"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
