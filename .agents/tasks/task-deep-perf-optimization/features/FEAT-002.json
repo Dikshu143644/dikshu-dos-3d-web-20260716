@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Rewrite the preload system so only 1st-vdo blocks the preloader, implement scroll-proximity IntersectionObserver-based lazy loading for 2nd/3rd/4th-vdo, add progressive thumbnail-first loading (load small thumbnails immediately for interactivity then swap in full-res in background), and update all component references to use 150 frames with WebP paths.",
+  "status": "pending",
+  "steps": [
+    "Update src/components/HomeExperience.tsx: (a) Change FRAME_COUNT from 300 to 150. (b) Update getSrc to return WebP paths: `/${folder}/frame-${String(i+1).padStart(3,'0')}.webp`. (c) Change priority so ONLY '1st-vdo' is 'critical', and '2nd-vdo', '3rd-vdo', '4th-vdo' are all 'lazy'. (d) Add a thumbGetSrc function that returns thumbnail paths: `/${folder}-thumb/frame-${String(i+1).padStart(3,'0')}.webp`.",
+    "Rewrite src/hooks/useSequencesPreload.ts to support progressive loading: (a) Add a 'thumbGetSrc' optional field to SequenceConfig. (b) For the critical sequence (1st-vdo), load thumbnails first (fast, ~2MB), set ready=true once thumbnails are loaded so the page becomes interactive immediately, then swap in full-res frames in the background. (c) For lazy sequences, do NOT load them on mount at all - export a function like 'loadSequence(id)' that can be called on demand. (d) The progress bar should track thumbnail loading of the critical sequence only (which will be very fast). (e) When full-res frames load, they replace the thumbnail HTMLImageElement entries in imagesRef so the canvas automatically draws higher quality.",
+    "Create a new hook src/hooks/useScrollProximityLoader.ts that: (a) Takes a list of sequence IDs and a ref to a trigger element (or uses IntersectionObserver on the section that uses each sequence). (b) When a section is within 1 viewport of being visible (rootMargin: '100% 0px'), triggers loading of that sequence's full-res frames. (c) Exports a way for components to register their section ref and sequence ID. (d) Integrates with the preload hook's 'loadSequence' capability.",
+    "Update src/components/HomeExperience.tsx to wire up the scroll proximity loader: pass section refs and sequence IDs for 2nd-vdo, 3rd-vdo, 4th-vdo sections so they load on scroll proximity rather than all at once.",
+    "Update src/components/Hero/Hero.tsx to work with the new system: it already reads from imagesRef which will be populated progressively - just ensure frameCount is passed correctly (150).",
+    "Update src/components/ReservationMotionSection.tsx and src/components/ContactSection.tsx: both use 4th-vdo from imagesRef, verify they work with the progressive loading (frames may not be loaded initially - ImageSequencePlayer already handles missing frames with retries).",
+    "Ensure ImageSequencePlayer.tsx gracefully handles the thumbnail-to-fullres swap: when a full-res image replaces a thumbnail in the array, the next drawFrame call will naturally use the higher-res version - no changes needed since it reads imagesRef fresh each draw."
+  ],
+  "acceptance_criteria": [
+    "Running npm run build succeeds with no TypeScript errors",
+    "Only 1st-vdo thumbnails block the preloader (progress tracks ~150 tiny images, resolves in <2 seconds on fast connection)",
+    "2nd-vdo, 3rd-vdo, 4th-vdo do not load ANY frames until the user scrolls near their respective sections",
+    "IntersectionObserver with rootMargin triggers loading when sections are within 1 viewport distance",
+    "After preloader dismisses, 1st-vdo full-res frames load in background and replace thumbnails seamlessly",
+    "The canvas displays thumbnail quality immediately after preloader, then upgrades to full-res without flicker",
+    "Total initial payload to dismiss preloader is under 3MB (150 thumbnails at 240x135 WebP)"
+  ],
+  "verification": [
+    "npm run build completes without errors",
+    "grep -n 'FRAME_COUNT' src/components/HomeExperience.tsx shows 150",
+    "grep -n 'critical' src/hooks/useSequencesPreload.ts or src/components/HomeExperience.tsx confirms only 1st-vdo is critical",
+    "grep -n 'IntersectionObserver' src/hooks/useScrollProximityLoader.ts confirms scroll-based loading exists"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-001",
+  "type": "chore",
+  "description": "Convert all JPG frames to WebP, reduce frame count from 300 to 150 (skip every other frame), and generate low-res thumbnails for progressive loading. This is a batch asset processing step using sharp.",
+  "status": "in_progress",
+  "steps": [
+    "Create a Node.js script at scripts/convert-frames.mjs that: (a) For each folder in ['1st-vdo','2nd-vdo','3rd-vdo','4th-vdo'], reads all 300 JPG frames, takes every other frame (frame 1,3,5,...299 = 150 frames), converts each to WebP at quality 80, resizes to 960x540 for the full-res version, saves as frame-001.webp through frame-150.webp in the same folder (replacing the JPGs). (b) Also generates a thumbnail version at 240x135 quality 50 into public/<folder>-thumb/ directories (frame-001.webp through frame-150.webp). (c) After conversion, deletes all original .jpg files from each folder.",
+    "Add a 'convert-frames' script entry in package.json: \"convert-frames\": \"node scripts/convert-frames.mjs\"",
+    "Run the script via: node scripts/convert-frames.mjs - this will process all 1200 JPGs into 600 WebP full-res + 600 WebP thumbnails and delete the originals.",
+    "Verify that each folder (public/1st-vdo, etc.) has exactly 150 .webp files named frame-001.webp through frame-150.webp, and each thumb folder (public/1st-vdo-thumb, etc.) has 150 .webp files."
+  ],
+  "acceptance_criteria": [
+    "public/1st-vdo/ contains exactly 150 WebP files named frame-001.webp to frame-150.webp",
+    "public/2nd-vdo/ contains exactly 150 WebP files",
+    "public/3rd-vdo/ contains exactly 150 WebP files",
+    "public/4th-vdo/ contains exactly 150 WebP files",
+    "public/1st-vdo-thumb/ contains exactly 150 WebP thumbnail files",
+    "public/2nd-vdo-thumb/ contains exactly 150 WebP thumbnail files",
+    "public/3rd-vdo-thumb/ contains exactly 150 WebP thumbnail files",
+    "public/4th-vdo-thumb/ contains exactly 150 WebP thumbnail files",
+    "No .jpg files remain in any *-vdo/ directory",
+    "Total size of all *-vdo/ directories combined is under 60MB (down from 184MB)"
+  ],
+  "verification": [
+    "ls public/1st-vdo/*.webp | wc -l should output 150",
+    "ls public/1st-vdo-thumb/*.webp | wc -l should output 150",
+    "ls public/1st-vdo/*.jpg 2>/dev/null | wc -l should output 0",
+    "du -sh public/1st-vdo/ public/2nd-vdo/ public/3rd-vdo/ public/4th-vdo/ - each should be significantly smaller than before"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
