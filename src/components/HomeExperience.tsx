@@ -34,6 +34,7 @@ export default function HomeExperience() {
         id: folder,
         count: FRAME_COUNT,
         getSrc: (i: number) => `/${folder}/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`,
+        priority: folder === "4th-vdo" ? "lazy" : "critical",
       })),
     []
   );
