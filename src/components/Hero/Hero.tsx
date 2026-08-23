@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
 import { useScrollStoryController } from "@/hooks/useScrollStoryController";
@@ -24,6 +24,7 @@ interface HeroProps {
   imagesRef: React.MutableRefObject<Record<string, HTMLImageElement[]>>;
   frameCount: number;
   revealed: boolean;
+  triggerLoad: (sequenceId: string) => void;
 }
 
 /**
@@ -31,7 +32,7 @@ interface HeroProps {
  * left into the next one in order — no text, no buttons, just the videos
  * and the cinematic 3D slide between them.
  */
-export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
+export default function Hero({ imagesRef, frameCount, revealed, triggerLoad }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
@@ -47,6 +48,21 @@ export default function Hero({ imagesRef, frameCount, revealed }: HeroProps) {
   const playerRef1 = useRef<ImageSequencePlayerHandle>(null);
   const playerRef2 = useRef<ImageSequencePlayerHandle>(null);
   const playerRefs = [playerRef0, playerRef1, playerRef2] as const;
+
+  // Once the page is ready, trigger loading of 2nd-vdo and 3rd-vdo.
+  // The hero is at the top so these are needed soon after page load.
+  useEffect(() => {
+    if (!revealed) return;
+    // Use requestIdleCallback (or setTimeout fallback) to avoid blocking the main thread
+    const scheduleLoad = typeof window.requestIdleCallback === "function"
+      ? window.requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 100);
+
+    scheduleLoad(() => {
+      triggerLoad("2nd-vdo");
+      triggerLoad("3rd-vdo");
+    });
+  }, [revealed, triggerLoad]);
 
   useScrollStoryController({
     active: revealed,

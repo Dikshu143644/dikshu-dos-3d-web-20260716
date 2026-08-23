@@ -2,7 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
-const MAX_CANVAS_DPR = 3;
+const MAX_CANVAS_DPR = 2;
 
 export interface ImageSequencePlayerHandle {
   drawFrame: (index: number) => void;

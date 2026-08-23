@@ -1,0 +1,24 @@
+{
+  "project_type": "Next.js 15 + TypeScript + Tailwind CSS + Framer Motion + GSAP scroll-driven image sequence website",
+  "language": "TypeScript/React",
+  "build_system": "Next.js with npm scripts",
+  "test_framework": "No test framework configured - no test files exist",
+  "build_command": "npm run build",
+  "test_command": "npx tsc --noEmit",
+  "verification_instructions": "1. Run npx tsc --noEmit to confirm TypeScript compiles without errors. 2. Run npm run build to confirm Next.js production build succeeds.",
+  "snapshot_or_generated_files": null,
+  "setup_instructions": "npm install (node_modules not currently present)",
+  "environment_constraints": "node_modules not installed. Must run npm install first. No test runner configured so verification is TypeScript compilation + Next.js build.",
+  "contribution_requirements": "No CONTRIBUTING.md found. Standard Next.js conventions apply.",
+  "key_patterns": "- useSequencesPreload hook creates Image() elements for all frames and tracks progress via onload/onerror. Sets ready=true only when ALL images settle. - ImageSequencePlayer is imperative (uses drawFrame via ref) so scroll-tied animations can update without React renders. - imagesRef is a mutable ref object mapping sequence IDs to HTMLImageElement arrays, shared across all consumers. - Hero uses sequences 1st-vdo, 2nd-vdo, 3rd-vdo with a pinned ScrollTrigger. - ReservationMotionSection and ContactSection use 4th-vdo (below the fold). - Preloader component shows animated progress bar until ready=true.",
+  "relevant_files": [
+    "src/hooks/useSequencesPreload.ts",
+    "src/components/HomeExperience.tsx",
+    "src/components/story/ImageSequencePlayer.tsx",
+    "src/components/Preloader.tsx",
+    "src/components/Hero/Hero.tsx",
+    "src/components/ReservationMotionSection.tsx",
+    "src/components/ContactSection.tsx"
+  ],
+  "directory_structure": "src/hooks/ - custom React hooks. src/components/ - all UI components. src/components/story/ - image sequence related components. src/components/Hero/ - hero section. src/lib/story/ - transition controller utilities. public/1st-vdo through 4th-vdo - 300 JPG frames each."
+}

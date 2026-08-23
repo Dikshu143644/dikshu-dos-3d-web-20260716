@@ -16,6 +16,7 @@ import {
 import ImageSequencePlayer, {
   type ImageSequencePlayerHandle,
 } from "@/components/story/ImageSequencePlayer";
+import { useScrollProximityLoader } from "@/hooks/useScrollProximityLoader";
 
 const contactLinks = {
   callPrimary: "tel:+917666971183",
@@ -126,10 +127,15 @@ interface ContactSectionProps {
   imagesRef: MutableRefObject<Record<string, HTMLImageElement[]>>;
   frameCount: number;
   revealed: boolean;
+  triggerLoad: (sequenceId: string) => void;
 }
 
-export default function ContactSection({ imagesRef, frameCount, revealed }: ContactSectionProps) {
+export default function ContactSection({ imagesRef, frameCount, revealed, triggerLoad }: ContactSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
   const playerRef = useRef<ImageSequencePlayerHandle>(null);
+
+  // Also trigger 4th-vdo loading when this section is in proximity (idempotent)
+  useScrollProximityLoader(sectionRef, ["4th-vdo"], triggerLoad);
 
   useEffect(() => {
     if (!revealed) return;
@@ -154,7 +160,7 @@ export default function ContactSection({ imagesRef, frameCount, revealed }: Cont
   }, [frameCount, revealed]);
 
   return (
-    <section id="contact" className="relative overflow-hidden border-t border-white/10 bg-black px-6 py-16 md:py-20">
+    <section id="contact" ref={sectionRef} className="relative overflow-hidden border-t border-white/10 bg-black px-6 py-16 md:py-20">
       <ImageSequencePlayer
         ref={playerRef}
         imagesRef={imagesRef}
